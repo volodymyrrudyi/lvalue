@@ -1,7 +1,9 @@
 bin_PROGRAMS = lvalue
 lvalue_YFLAGS = -d
 lvalue_LFLAGS = -d
-lvalue_CPPFLAGS =  -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
+lvalue_CPPFLAGS =  -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS `llvm-config --cppflags`
+lvalue_LDFLAGS = `llvm-config --ldflags core jit ` `llvm-config --libs core jit`
+AM_CPPFLAGS=`llvm-config --cppflags`
 lvalue_SOURCES = src/lvalue/main.cpp \
 	src/lvalue/parser.ypp \
 	src/lvalue/tokens.lpp \
