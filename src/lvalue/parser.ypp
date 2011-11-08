@@ -50,7 +50,7 @@
 
 %%
 
-program : stmts { programBlock = $1; }
+program : stmts { printf("program\n"); programBlock = $1; }
         ;
 
 stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }

@@ -1413,7 +1413,7 @@ yyreduce:
     {
         case 2:
 #line 53 "parser.ypp"
-    { programBlock = (yyvsp[(1) - (1)].block); }
+    { printf("program\n"); programBlock = (yyvsp[(1) - (1)].block); }
     break;
 
   case 3:
