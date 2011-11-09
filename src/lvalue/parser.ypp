@@ -25,7 +25,7 @@
    they represent.
  */
 %token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING
-%token <token> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
+%token <token> TDEF TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
 %token <token> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
 %token <token> TPLUS TMINUS TMUL TDIV
 
@@ -69,8 +69,8 @@ var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
          | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
          ;
 
-func_decl : ident ident TLPAREN func_decl_args TRPAREN block
-            { $$ = new NFunctionDeclaration(*$1, *$2, *$4, *$6); delete $4; }
+func_decl : TDEF ident TLPAREN func_decl_args TRPAREN TCOLON ident block
+            { $$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
           ;
 
 func_decl_args : /*blank*/  { $$ = new VariableList(); }

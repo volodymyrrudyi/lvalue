@@ -21,6 +21,7 @@ void CodeGenContext::generateCode(NBlock& root)
 	ReturnInst::Create(getGlobalContext(), bblock);
 	popBlock();
 
+
 	/* Print the bytecode in a human-readable format
 	   to see if our program compiled properly
 	 */
@@ -34,11 +35,11 @@ void CodeGenContext::generateCode(NBlock& root)
 GenericValue CodeGenContext::runCode() {
 //	std::cout << "Running code...\n";
 	//ExistingModuleProvider *mp = new ExistingModuleProvider(module);
-	ExecutionEngine *ee = ExecutionEngine::create(module, false);
+	ExecutionEngine *ee = EngineBuilder(module).create();
 	vector<GenericValue> noargs;
-	GenericValue v = ee->runFunction(mainFunction, noargs);
+        ee->runFunction(mainFunction, noargs);
 	std::cout << "Code was run.\n";
-	return v;
+	//return v;
 }
 
 /* Returns an LLVM type based on the identifier */
