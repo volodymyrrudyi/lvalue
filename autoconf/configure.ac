@@ -5,8 +5,8 @@ AC_INIT([[[lvalue]]],[[[0.01]]],[vladimir.rudoy@gmail.com])
 
 
 dnl Identify where LLVM source tree is
-LLVM_SRC_ROOT="../.."
-LLVM_OBJ_ROOT="../.."
+LLVM_SRC_ROOT="`(cd $srcdir/../..; pwd)`"
+LLVM_OBJ_ROOT="`(cd ../..; pwd)`"
 
 dnl Tell autoconf that this is an LLVM project being configured
 dnl This provides the --with-llvmsrc and --with-llvmobj options
