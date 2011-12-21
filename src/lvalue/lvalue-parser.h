@@ -104,7 +104,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "parser.ypp"
+#line 11 "parser.ypp"
 {
     Node *node;
     NBlock *block;

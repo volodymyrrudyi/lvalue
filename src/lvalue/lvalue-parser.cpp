@@ -133,6 +133,7 @@
 #line 1 "parser.ypp"
 
     #include "node.h"
+    #include <cstdio>
     NBlock *programBlock; /* the top level root node of our final AST */
 
     extern int yylex();
@@ -159,7 +160,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "parser.ypp"
+#line 11 "parser.ypp"
 {
     Node *node;
     NBlock *block;
@@ -173,7 +174,7 @@ typedef union YYSTYPE
     int token;
 }
 /* Line 193 of yacc.c.  */
-#line 177 "src/lvalue/lvalue-parser.cpp"
+#line 178 "src/lvalue/lvalue-parser.cpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -186,7 +187,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 190 "src/lvalue/lvalue-parser.cpp"
+#line 191 "src/lvalue/lvalue-parser.cpp"
 
 #ifdef short
 # undef short
@@ -485,11 +486,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    56,    57,    60,    60,    60,    61,    64,
-      65,    67,    68,    70,    71,    74,    78,    79,    80,    82,
-      83,    87,    90,    91,    94,    95,    96,    97,    98,    99,
-     102,   103,   104,   107,   107,   107,   107,   107,   107,   108,
-     108,   108,   108
+       0,    54,    54,    57,    58,    61,    61,    61,    62,    65,
+      66,    68,    69,    71,    72,    75,    79,    80,    81,    83,
+      84,    88,    91,    92,    95,    96,    97,    98,    99,   100,
+     103,   104,   105,   108,   108,   108,   108,   108,   108,   109,
+     109,   109,   109
 };
 #endif
 
@@ -1450,143 +1451,143 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 53 "parser.ypp"
+#line 54 "parser.ypp"
     { printf("program\n"); programBlock = (yyvsp[(1) - (1)].block); }
     break;
 
   case 3:
-#line 56 "parser.ypp"
+#line 57 "parser.ypp"
     { (yyval.block) = new NBlock(); (yyval.block)->statements.push_back((yyvsp[(1) - (1)].stmt)); }
     break;
 
   case 4:
-#line 57 "parser.ypp"
+#line 58 "parser.ypp"
     { (yyvsp[(1) - (2)].block)->statements.push_back((yyvsp[(2) - (2)].stmt)); }
     break;
 
   case 8:
-#line 61 "parser.ypp"
+#line 62 "parser.ypp"
     { (yyval.stmt) = new NExpressionStatement(*(yyvsp[(1) - (1)].expr)); }
     break;
 
   case 9:
-#line 64 "parser.ypp"
+#line 65 "parser.ypp"
     { (yyval.block) = (yyvsp[(1) - (2)].block); }
     break;
 
   case 10:
-#line 65 "parser.ypp"
+#line 66 "parser.ypp"
     { (yyval.block) = new NBlock(); }
     break;
 
   case 11:
-#line 67 "parser.ypp"
+#line 68 "parser.ypp"
     { (yyval.block) = (yyvsp[(1) - (1)].block); }
     break;
 
   case 12:
-#line 68 "parser.ypp"
+#line 69 "parser.ypp"
     { (yyval.block) = new NBlock(); }
     break;
 
   case 13:
-#line 70 "parser.ypp"
+#line 71 "parser.ypp"
     { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[(1) - (2)].ident), *(yyvsp[(2) - (2)].ident)); }
     break;
 
   case 14:
-#line 71 "parser.ypp"
+#line 72 "parser.ypp"
     { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[(1) - (4)].ident), *(yyvsp[(2) - (4)].ident), (yyvsp[(4) - (4)].expr)); }
     break;
 
   case 15:
-#line 75 "parser.ypp"
+#line 76 "parser.ypp"
     { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[(7) - (8)].ident), *(yyvsp[(2) - (8)].ident), *(yyvsp[(4) - (8)].varvec), *(yyvsp[(8) - (8)].block)); delete (yyvsp[(4) - (8)].varvec); }
     break;
 
   case 16:
-#line 78 "parser.ypp"
+#line 79 "parser.ypp"
     { (yyval.varvec) = new VariableList(); }
     break;
 
   case 17:
-#line 79 "parser.ypp"
+#line 80 "parser.ypp"
     { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[(1) - (1)].var_decl)); }
     break;
 
   case 18:
-#line 80 "parser.ypp"
+#line 81 "parser.ypp"
     { (yyvsp[(1) - (3)].varvec)->push_back((yyvsp[(3) - (3)].var_decl)); }
     break;
 
   case 19:
-#line 82 "parser.ypp"
+#line 83 "parser.ypp"
     { (yyval.stmt) = new NIfStatement(*(yyvsp[(3) - (7)].expr), *(yyvsp[(5) - (7)].block), *(yyvsp[(7) - (7)].block)); }
     break;
 
   case 20:
-#line 83 "parser.ypp"
+#line 84 "parser.ypp"
     { }
     break;
 
   case 21:
-#line 87 "parser.ypp"
+#line 88 "parser.ypp"
     { (yyval.ident) = new NIdentifier(*(yyvsp[(1) - (1)].string)); delete (yyvsp[(1) - (1)].string); }
     break;
 
   case 22:
-#line 90 "parser.ypp"
+#line 91 "parser.ypp"
     { (yyval.expr) = new NInteger(atol((yyvsp[(1) - (1)].string)->c_str())); delete (yyvsp[(1) - (1)].string); }
     break;
 
   case 23:
-#line 91 "parser.ypp"
+#line 92 "parser.ypp"
     { (yyval.expr) = new NDouble(atof((yyvsp[(1) - (1)].string)->c_str())); delete (yyvsp[(1) - (1)].string); }
     break;
 
   case 24:
-#line 94 "parser.ypp"
+#line 95 "parser.ypp"
     { (yyval.expr) = new NAssignment(*(yyvsp[(1) - (3)].ident), *(yyvsp[(3) - (3)].expr)); }
     break;
 
   case 25:
-#line 95 "parser.ypp"
+#line 96 "parser.ypp"
     { (yyval.expr) = new NMethodCall(*(yyvsp[(1) - (4)].ident), *(yyvsp[(3) - (4)].exprvec)); delete (yyvsp[(3) - (4)].exprvec); }
     break;
 
   case 26:
-#line 96 "parser.ypp"
+#line 97 "parser.ypp"
     { (yyval.ident) = (yyvsp[(1) - (1)].ident); }
     break;
 
   case 28:
-#line 98 "parser.ypp"
+#line 99 "parser.ypp"
     { (yyval.expr) = new NBinaryOperator(*(yyvsp[(1) - (3)].expr), (yyvsp[(2) - (3)].token), *(yyvsp[(3) - (3)].expr)); }
     break;
 
   case 29:
-#line 99 "parser.ypp"
+#line 100 "parser.ypp"
     { (yyval.expr) = (yyvsp[(2) - (3)].expr); }
     break;
 
   case 30:
-#line 102 "parser.ypp"
+#line 103 "parser.ypp"
     { (yyval.exprvec) = new ExpressionList(); }
     break;
 
   case 31:
-#line 103 "parser.ypp"
+#line 104 "parser.ypp"
     { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[(1) - (1)].expr)); }
     break;
 
   case 32:
-#line 104 "parser.ypp"
+#line 105 "parser.ypp"
     { (yyvsp[(1) - (3)].exprvec)->push_back((yyvsp[(3) - (3)].expr)); }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1590 "src/lvalue/lvalue-parser.cpp"
+#line 1591 "src/lvalue/lvalue-parser.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1800,6 +1801,6 @@ yyreturn:
 }
 
 
-#line 111 "parser.ypp"
+#line 112 "parser.ypp"
 
 
