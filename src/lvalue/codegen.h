@@ -1,3 +1,4 @@
+#include <typeinfo>
 #include <stack>
 #include <llvm/Module.h>
 #include <llvm/Function.h>
