@@ -11,6 +11,11 @@ extern "C" int yywrap() { return 1; }
 
 [ \t\n]                 ;
 "def"                   return TOKEN(TDEF);
+"do"                    return TOKEN(TDO);
+"end"                   return TOKEN(TEND);
+"if"                    return TOKEN(TIF);
+"elsif"                 return TOKEN(TELSIF);
+"else"                  return TOKEN(TELSE);
 [a-zA-Z_][a-zA-Z0-9_]*  SAVE_TOKEN; return TIDENTIFIER;
 [0-9]+\.[0-9]*          SAVE_TOKEN; return TDOUBLE;
 [0-9]+                  SAVE_TOKEN; return TINTEGER;

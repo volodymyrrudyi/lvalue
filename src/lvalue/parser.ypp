@@ -24,10 +24,10 @@
    match our tokens.l lex file. We also define the node type
    they represent.
  */
-%token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING
-%token <token> TDEF TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
-%token <token> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
-%token <token> TPLUS TMINUS TMUL TDIV
+%token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING TIF TELSIF TELSE
+%token <token> TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
+%token <token> TDO TEND TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
+%token <token> TDEF TPLUS TMINUS TMUL TDIV
 
 /* Define the type of node our nonterminal symbols represent.
    The types refer to the %union declaration above. Ex: when
@@ -38,8 +38,8 @@
 %type <expr> numeric expr
 %type <varvec> func_decl_args
 %type <exprvec> call_args
-%type <block> program stmts block
-%type <stmt> stmt var_decl func_decl
+%type <block> program stmts block if_inner_block
+%type <stmt> stmt var_decl func_decl if_stmt
 %type <token> comparison
 
 /* Operator precedence for mathematical operators */
@@ -57,14 +57,16 @@ stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
       | stmts stmt { $1->statements.push_back($<stmt>2); }
       ;
 
-stmt : var_decl | func_decl
+stmt : var_decl | func_decl | if_stmt
      | expr { $$ = new NExpressionStatement(*$1); }
      ;
 
-block : TLBRACE stmts TRBRACE { $$ = $2; }
-      | TLBRACE TRBRACE { $$ = new NBlock(); }
+block : stmts TEND { $$ = $1; }
+      | TEND { $$ = new NBlock(); }
       ;
-
+if_inner_block : stmts { $$ = $1; }
+          | { $$ = new NBlock(); }
+          ;
 var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
          | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
          ;
@@ -77,6 +79,10 @@ func_decl_args : /*blank*/  { $$ = new VariableList(); }
           | var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
           | func_decl_args TCOMMA var_decl { $1->push_back($<var_decl>3); }
           ;
+if_stmt :   TIF TLPAREN expr TRPAREN if_inner_block TELSE block { $$ = new NIfStatement(*$3, *$5, *$7); }
+          | TIF TLPAREN expr TRPAREN block { }
+          ;
+
 
 ident : TIDENTIFIER { $$ = new NIdentifier(*$1); delete $1; }
       ;

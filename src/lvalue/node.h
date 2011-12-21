@@ -111,3 +111,19 @@ public:
         type(type), id(id), arguments(arguments), block(block) { }
     virtual llvm::Value* codeGen(CodeGenContext& context);
 };
+
+class NIfStatement : public NStatement {
+  public:
+    NExpression& conditionExpression;
+    NBlock &primaryBlock;
+    NBlock &alternativeBlock;
+
+    NIfStatement(NExpression &conditionExpression,
+        NBlock &primaryBlock,  NBlock &alternativeBlock) :
+    primaryBlock(primaryBlock),
+    alternativeBlock(alternativeBlock), conditionExpression(conditionExpression)
+  {
+  }
+
+    virtual llvm::Value* codeGen(CodeGenContext& context);
+};

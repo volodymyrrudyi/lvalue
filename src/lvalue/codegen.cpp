@@ -37,9 +37,9 @@ GenericValue CodeGenContext::runCode() {
 	//ExistingModuleProvider *mp = new ExistingModuleProvider(module);
 	ExecutionEngine *ee = EngineBuilder(module).create();
 	vector<GenericValue> noargs;
-        ee->runFunction(mainFunction, noargs);
+        GenericValue v = ee->runFunction(mainFunction, noargs);
 	std::cout << "Code was run.\n";
-	//return v;
+	return v;
 }
 
 /* Returns an LLVM type based on the identifier */
@@ -176,4 +176,9 @@ Value* NFunctionDeclaration::codeGen(CodeGenContext& context)
 	context.popBlock();
 	std::cout << "Creating function: " << id.name << std::endl;
 	return function;
+}
+
+Value* NIfStatement::codeGen(CodeGenContext& context)
+{
+
 }
