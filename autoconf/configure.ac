@@ -3,7 +3,6 @@ dnl * Initialize
 dnl **************************************************************************
 AC_INIT([[[lvalue]]],[[[0.01]]],[vladimir.rudoy@gmail.com])
 
-
 dnl Identify where LLVM source tree is
 LLVM_SRC_ROOT="`(cd $srcdir/../..; pwd)`"
 LLVM_OBJ_ROOT="`(cd ../..; pwd)`"
