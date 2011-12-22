@@ -2,7 +2,6 @@
     #include "node.h"
     #include <cstdio>
     NBlock *programBlock; /* the top level root node of our final AST */
-
     extern int yylex();
     void yyerror(const char *s) { printf("ERROR: %s\n", s); }
 %}
