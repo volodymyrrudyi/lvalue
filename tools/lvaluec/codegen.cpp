@@ -186,31 +186,26 @@ Value* NIfStatement::codeGen(CodeGenContext& context)
     Value *CondV = conditionExpression.codeGen(context);
     if (CondV == 0) return 0;
 
-    // Конвертация условия в булево сравнением с 0.0.
+    // Conversion to comparsion with 0.0
     CondV = Builder.CreateFCmpONE(CondV,
                                   ConstantFP::get(getGlobalContext(), APFloat(0.0)),
                                   "ifcond");
 
     Function *TheFunction = Builder.GetInsertBlock()->getParent();
 
-    // Создаём блоки для веток then и else.  Вставляем блок 'then' в
-    // конец функции.
     BasicBlock *ThenBB = BasicBlock::Create(getGlobalContext(), "then", TheFunction);
     BasicBlock *ElseBB = BasicBlock::Create(getGlobalContext(), "else");
     BasicBlock *MergeBB = BasicBlock::Create(getGlobalContext(), "ifcont");
 
     Builder.CreateCondBr(CondV, ThenBB, ElseBB);
-    // Генерируем значение.
     Builder.SetInsertPoint(ThenBB);
 
     Value *ThenV = this->primaryBlock.codeGen(context);
     if (ThenV == 0) return 0;
 
     Builder.CreateBr(MergeBB);
-    // Codegen of 'Then' может изменить текущий блок, обновляем ThenBB для PHI.
     ThenBB = Builder.GetInsertBlock();
 
-    // Генерируем блок else.
     TheFunction->getBasicBlockList().push_back(ElseBB);
     Builder.SetInsertPoint(ElseBB);
 
@@ -218,10 +213,8 @@ Value* NIfStatement::codeGen(CodeGenContext& context)
     if (ElseV == 0) return 0;
 
     Builder.CreateBr(MergeBB);
-    // Кодогенерация 'Else' может изменить текущий блок, обновляем ElseBB для PHI.
     ElseBB = Builder.GetInsertBlock();
 
-    // Генерация блока слияния.
     TheFunction->getBasicBlockList().push_back(MergeBB);
     Builder.SetInsertPoint(MergeBB);
     PHINode *PN = Builder.CreatePHI(Type::getDoubleTy(getGlobalContext()),
