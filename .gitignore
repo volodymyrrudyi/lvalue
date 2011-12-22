@@ -1,6 +1,5 @@
 Release
 autom4te.cache/
-Makefile
 *.o
 /.deps/
 /src/tests/.deps/
@@ -12,7 +11,6 @@ tests/*
 .svn/
 .config.in.h\~
 *.log
-Makefile
 Makefile.in
 Makefile.msc
 missing
