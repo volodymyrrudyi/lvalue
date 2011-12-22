@@ -38,6 +38,7 @@ GenericValue CodeGenContext::runCode() {
     std::cout << "Running code...\n";
     //ExistingModuleProvider *mp = new ExistingModuleProvider(module);
     ExecutionEngine *ee = EngineBuilder(module).create();
+    cout << "Engine" << ee << endl;
     vector<GenericValue> noargs;
     GenericValue v = ee->runFunction(mainFunction, noargs);
     std::cout << "Code was run.\n";

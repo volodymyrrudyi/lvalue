@@ -9,6 +9,7 @@ extern NBlock* programBlock;
 
 int main(int argc, char **argv)
 {
+    InitializeNativeTarget();
     yyparse();
     std::cout << programBlock << std::endl;
 
