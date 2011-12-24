@@ -23,10 +23,21 @@
 #ifndef AST_BINARYOPERATOR_H
 #define AST_BINARYOPERATOR_H
 
-class AST_BinaryOperator
+#include "AST_Node.h"
+#include <llvm/Instructions.h
+
+namespace lvalue
 {
-public:
-    AST_BinaryOperator();
-};
+    class AST_BinaryOperator : public AST_Node
+    {
+    public:
+        int op;
+        AST_Expression& lhs;
+        AST_Expression& rhs;
+        AST_BinaryOperator(llvm::IRBuilder &builder,
+        AST_Expression &lhs, int op, AST_Expression &rhs);
+        SharedValue emmitCode();
+    };
+}
 
 #endif // AST_BINARYOPERATOR_H

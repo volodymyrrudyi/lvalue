@@ -41,7 +41,6 @@ namespace lvalue
     public:
 
       AST_Node(llvm::IRBuilder<> &irBuilder);
-
       /**
        * Virtual method for emmiting LLVM IR code of this AST Node
        */
