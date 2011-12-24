@@ -183,6 +183,7 @@ Value* NFunctionDeclaration::codeGen(CodeGenContext& context)
 
 Value* NIfStatement::codeGen(CodeGenContext& context)
 {
+
     Value *CondV = conditionExpression.codeGen(context);
     if (CondV == 0) return 0;
 
@@ -191,7 +192,7 @@ Value* NIfStatement::codeGen(CodeGenContext& context)
                                   ConstantFP::get(getGlobalContext(), APFloat(0.0)),
                                   "ifcond");
 
-    Function *TheFunction = Builder.GetInsertBlock()->getParent();
+    Function *TheFunction = context.currentBlock()->getParent();
 
     BasicBlock *ThenBB = BasicBlock::Create(getGlobalContext(), "then", TheFunction);
     BasicBlock *ElseBB = BasicBlock::Create(getGlobalContext(), "else");
@@ -203,7 +204,7 @@ Value* NIfStatement::codeGen(CodeGenContext& context)
     Value *ThenV = this->primaryBlock.codeGen(context);
     if (ThenV == 0) return 0;
 
-    Builder.CreateBr(MergeBB);
+    BranchInst::Create(MergeBB);
     ThenBB = Builder.GetInsertBlock();
 
     TheFunction->getBasicBlockList().push_back(ElseBB);
@@ -223,6 +224,17 @@ Value* NIfStatement::codeGen(CodeGenContext& context)
     PN->addIncoming(ThenV, ThenBB);
     PN->addIncoming(ElseV, ElseBB);
     return PN;
-
-
 }
+
+Value* NWhileStatement::codeGen(CodeGenContext& context)
+{
+       Value *EndCond = conditionExpression.codeGen(context);
+      if (EndCond == 0) return EndCond;
+
+      // Convert condition to a bool by comparing equal to 0.0.
+      EndCond = Builder.CreateFCmpONE(EndCond,
+                                  ConstantFP::get(getGlobalContext(), APFloat(0.0)),
+                                      "loopcond");
+}
+
+

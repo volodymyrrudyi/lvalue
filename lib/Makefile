@@ -3,6 +3,6 @@ LEVEL=..
 #
 # List all of the subdirectories that we will compile.
 #
-DIRS=
+DIRS= lvaluel
 
 include $(LEVEL)/Makefile.common

@@ -38,7 +38,7 @@
 %type <expr> numeric expr
 %type <varvec> func_decl_args
 %type <exprvec> call_args
-%type <block> program stmts block if_inner_block
+%type <block> program stmts block
 %type <stmt> stmt var_decl func_decl if_stmt
 %type <token> comparison
 
@@ -61,12 +61,10 @@ stmt : var_decl | func_decl | if_stmt
      | expr { $$ = new NExpressionStatement(*$1); }
      ;
 
-block : stmts TEND { $$ = $1; }
-      | TEND { $$ = new NBlock(); }
+block : TLBRACE stmts TRBRACE{ $$ = $2; printf("Non-empty block\n"); }
+      | TLBRACE TRBRACE { $$ = new NBlock();printf("Non-empty block\n"); }
       ;
-if_inner_block : stmts { $$ = $1; }
-          | { $$ = new NBlock(); }
-          ;
+
 var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
          | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
          ;
@@ -79,7 +77,7 @@ func_decl_args : /*blank*/  { $$ = new VariableList(); }
           | var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
           | func_decl_args TCOMMA var_decl { $1->push_back($<var_decl>3); }
           ;
-if_stmt :   TIF TLPAREN expr TRPAREN if_inner_block TELSE block { $$ = new NIfStatement(*$3, *$5, *$7); }
+if_stmt :   TIF TLPAREN expr TRPAREN block TELSE block { printf("if statement\n"); $$ = new NIfStatement(*$3, *$5, *$7); }
           | TIF TLPAREN expr TRPAREN block { }
           ;
 

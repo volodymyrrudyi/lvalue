@@ -107,23 +107,37 @@ public:
     VariableList arguments;
     NBlock& block;
     NFunctionDeclaration(const NIdentifier& type, const NIdentifier& id,
-            const VariableList& arguments, NBlock& block) :
+                         const VariableList& arguments, NBlock& block) :
         type(type), id(id), arguments(arguments), block(block) { }
     virtual llvm::Value* codeGen(CodeGenContext& context);
 };
 
 class NIfStatement : public NStatement {
-  public:
+public:
     NExpression& conditionExpression;
     NBlock &primaryBlock;
     NBlock &alternativeBlock;
 
     NIfStatement(NExpression &conditionExpression,
-        NBlock &primaryBlock,  NBlock &alternativeBlock) :
-    primaryBlock(primaryBlock),
-    alternativeBlock(alternativeBlock), conditionExpression(conditionExpression)
-  {
-  }
+                 NBlock &primaryBlock,  NBlock &alternativeBlock) :
+        primaryBlock(primaryBlock),
+        alternativeBlock(alternativeBlock), conditionExpression(conditionExpression)
+    {
+    }
+
+    virtual llvm::Value* codeGen(CodeGenContext& context);
+};
+
+class NWhileStatement : public NStatement {
+public:
+    NExpression& conditionExpression;
+    NBlock &body;
+
+    NWhileStatement(NExpression &conditionExpression, NBlock& body) :
+        body(body),
+        conditionExpression(conditionExpression)
+    {
+    }
 
     virtual llvm::Value* codeGen(CodeGenContext& context);
 };
