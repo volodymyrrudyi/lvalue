@@ -25,6 +25,8 @@
 
 #include "AST_Node.h"
 #include "AST_Identifier.h"
+#include "AST_Expression.h"
+#include "AST_Assignment.h"
 
 namespace lvalue
 {
@@ -33,8 +35,12 @@ namespace lvalue
     public:
         AST_Identifier &type;
         AST_Identifier &id;
+        SharedExpression assignmentExpression;
         AST_VariableDeclaration(LValue_Builder &builder,
-        AST_Identifier &id, AST_Identifier &type);
+        AST_Identifier &id, AST_Identifier &type,
+        	SharedExpression assignmentExpression);
+
+        SharedValue emmitCode();
     };
 
     typedef boost::shared_ptr<AST_VariableDeclaration> SharedVariable;
