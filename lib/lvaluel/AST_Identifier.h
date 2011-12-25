@@ -31,6 +31,7 @@ namespace lvalue
     {
     public:
         AST_Identifier(llvm::IRBuilder<> &builder);
+        SharedValue emmitCode();
     };
 }
 

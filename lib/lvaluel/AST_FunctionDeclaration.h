@@ -23,10 +23,23 @@
 #ifndef AST_FUNCTIONDECLARATION_H
 #define AST_FUNCTIONDECLARATION_H
 
-class AST_FunctionDeclaration
+#include "AST_Node.h"
+#include "AST_VariableDeclaration.h"
+
+namespace lvalue
 {
-public:
-    AST_FunctionDeclaration();
-};
+class AST_FunctionDeclaration : public AST_Node
+    {
+    public:
+		const AST_Identifier& type;
+		const AST_Identifier& id;
+		VariableList arguments;
+		AST_Block& block;
+        AST_FunctionDeclaration(llvm::IRBuilder<> &builder,
+        		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
+        		AST_Block &block);
+        SharedValue emmitCode();
+    };
+}
 
 #endif // AST_FUNCTIONDECLARATION_H

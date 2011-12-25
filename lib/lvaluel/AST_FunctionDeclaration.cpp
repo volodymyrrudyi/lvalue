@@ -22,6 +22,9 @@
 
 #include "AST_FunctionDeclaration.h"
 
-AST_FunctionDeclaration::AST_FunctionDeclaration()
+lvalue::AST_FunctionDeclaration::AST_FunctionDeclaration(llvm::IRBuilder<> &builder,
+		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
+		AST_Block &block)
+    : AST_Node(builder)
 {
 }

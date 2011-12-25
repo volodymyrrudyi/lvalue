@@ -26,3 +26,8 @@ lvalue::AST_Identifier::AST_Identifier(llvm::IRBuilder<> &builder) :
     AST_Node(builder)
 {
 }
+
+SharedValue lvalue::AST_Identifier::emmitCode()
+{
+
+}
