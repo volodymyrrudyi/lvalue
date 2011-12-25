@@ -22,22 +22,26 @@
 
 #include "AST_FunctionCall.h"
 
-lvalue::AST_FunctionCall::AST_FunctionCall(lvalue::LValueBuilder &builder,
+lvalue::AST_FunctionCall::AST_FunctionCall(LValue_Builder &builder,
         AST_Identifier &id,
         ExpressionList &arguments) 
         : AST_Node(builder), id(id), arguments(arguments)
 {
     
-  llvm::Function *function = builder.module->getFunction(id.name.c_str());
-	if (function == NULL) {
-		//std::cerr << "no such function " << id.name << std::endl;
-	}
-	std::vector<llvm::Value*> args;
-	ExpressionList::const_iterator it;
-	for (it = arguments.begin(); it != arguments.end(); it++) {
-		args.push_back((**it).emmitCode());
-	}
-	llvm::CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
-	//std::cout << "Creating method call: " << id.name << std::endl;
-	return call;
+}
+
+lvalue::SharedValue lvalue::AST_FunctionCall::emmitCode()
+{
+	  llvm::Function *function = builder.module->getFunction(id.name.c_str());
+		if (function == NULL) {
+			//std::cerr << "no such function " << id.name << std::endl;
+		}
+		std::vector<llvm::Value*> args;
+		ExpressionList::const_iterator it;
+		for (it = arguments.begin(); it != arguments.end(); it++) {
+			args.push_back((**it).emmitCode().get());
+		}
+		llvm::CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
+		//std::cout << "Creating method call: " << id.name << std::endl;
+		return SharedValue(call);
 }

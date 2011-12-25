@@ -36,7 +36,7 @@ namespace lvalue
 
     public:
       StatementList statements;
-      AST_Block(llvm::IRBuilder<> &irBuilder);
+      AST_Block(LValue_Builder &builder);
       virtual lvalue::SharedValue emmitCode();
   };
 }

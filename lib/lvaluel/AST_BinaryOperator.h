@@ -24,18 +24,19 @@
 #define AST_BINARYOPERATOR_H
 
 #include "AST_Node.h"
-#include <llvm/Instructions.h
+#include "AST_Expression.h"
+#include <llvm/Instructions.h>
 
 namespace lvalue
 {
     class AST_BinaryOperator : public AST_Node
     {
     public:
-        int op;
+    	llvm::Instruction::BinaryOps op;
         AST_Expression& lhs;
         AST_Expression& rhs;
-        AST_BinaryOperator(llvm::IRBuilder &builder,
-        AST_Expression &lhs, int op, AST_Expression &rhs);
+        AST_BinaryOperator(LValue_Builder &builder,
+        AST_Expression &lhs, llvm::Instruction::BinaryOps op, AST_Expression &rhs);
         SharedValue emmitCode();
     };
 }

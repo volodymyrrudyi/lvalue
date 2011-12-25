@@ -22,7 +22,7 @@
 
 #include "AST_VariableDeclaration.h"
 
-lvalue::AST_VariableDeclaration::AST_VariableDeclaration(llvm::IRBuilder<> &builder,
+lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder,
     AST_Identifier &id, AST_Identifier &type) :
     AST_Node(builder),
     type(type),

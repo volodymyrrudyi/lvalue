@@ -8,8 +8,10 @@
 #ifndef LVALUE_BUILDER_H
 #define	LVALUE_BUILDER_H
 
-#include <llvm/Module.h>
 #include <llvm/Support/IRBuilder.h>
+#include <llvm/LLVMContext.h>
+#include <llvm/Module.h>
+
 
 namespace lvalue
 {

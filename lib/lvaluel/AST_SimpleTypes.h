@@ -33,7 +33,7 @@ namespace lvalue
   class AST_Integer : public AST_Node
   {
     public:
-      AST_Integer(llvm::IRBuilder<> &irBuilder);
+      AST_Integer(LValue_Builder &builder);
       virtual lvalue::SharedValue emmitCode();
   };
 
@@ -43,7 +43,7 @@ namespace lvalue
   class AST_Double : public AST_Node
   {
     public:
-      AST_Double(llvm::IRBuilder<> &irBuilder);
+      AST_Double(LValue_Builder &builder);
       virtual lvalue::SharedValue emmitCode();
   };
 
@@ -53,7 +53,7 @@ namespace lvalue
   class AST_Boolean : public AST_Node
   {
     public:
-      AST_Boolean(llvm::IRBuilder<> &irBuilder);
+      AST_Boolean(LValue_Builder &builder);
       virtual lvalue::SharedValue emmitCode();
   };
 }

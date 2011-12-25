@@ -22,12 +22,12 @@
 
 #include "AST_Identifier.h"
 
-lvalue::AST_Identifier::AST_Identifier(llvm::IRBuilder<> &builder) :
-    AST_Node(builder)
+lvalue::AST_Identifier::AST_Identifier(LValue_Builder &builder, const std::string &name) :
+    AST_Node(builder), name(name)
 {
 }
 
-SharedValue lvalue::AST_Identifier::emmitCode()
+lvalue::SharedValue lvalue::AST_Identifier::emmitCode()
 {
 
 }

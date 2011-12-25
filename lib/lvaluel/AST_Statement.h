@@ -38,7 +38,7 @@ namespace lvalue
   {
     public:
 
-      AST_Statement(llvm::IRBuilder<> &irBuilder);
+      AST_Statement(LValue_Builder &builder);
       virtual lvalue::SharedValue emmitCode();
   };
 

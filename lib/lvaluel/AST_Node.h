@@ -37,10 +37,10 @@ namespace lvalue
   class AST_Node
   {
     protected:
-      llvm::IRBuilder<> &builder;
+      LValue_Builder &builder;
     public:
 
-      AST_Node(llvm::IRBuilder<> &irBuilder);
+      AST_Node(LValue_Builder &builder);
       /**
        * Virtual method for emmiting LLVM IR code of this AST Node
        */

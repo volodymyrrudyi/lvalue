@@ -23,26 +23,15 @@
 #include "AST_BinaryOperator.h"
 #include "AST_Expression.h"
 
-lvalue::AST_BinaryOperator::AST_BinaryOperator(llvm::IRBuilder<> &builder, 
-        AST_Expression &lhs, int op, AST_Expression &rhs) 
+lvalue::AST_BinaryOperator::AST_BinaryOperator(LValue_Builder &builder,
+        AST_Expression &lhs, llvm::Instruction::BinaryOps op, AST_Expression &rhs)
 : AST_Node(builder), op(op), rhs(rhs), lhs(lhs)
 {
     
 }
 
-lvalue::AST_BinaryOperator::emmitCode()
+lvalue::SharedValue lvalue::AST_BinaryOperator::emmitCode()
 {
-    llvm::Instruction::BinaryOps instr;
-    switch (op) {
-        
-    case TPLUS: 	instr = llvm::Instruction::Add; goto math;
-    case TMINUS: 	instr = llvm::Instruction::Sub; goto math;
-    case TMUL: 		instr = llvm::Instruction::Mul; goto math;
-    case TDIV: 		instr = llvm::Instruction::SDiv; goto math;
-    }
-
-    return SharedValue();
-    math:
-        return builder.CreateBinOp(instr, rhs.emmitCode(), lhs.emmitCode(), 
-            "binop");
+        return SharedValue(builder.CreateBinOp(op, rhs.emmitCode().get(), lhs.emmitCode().get(),
+            "binop"));
 }

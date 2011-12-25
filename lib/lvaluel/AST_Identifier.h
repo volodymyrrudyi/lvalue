@@ -30,7 +30,8 @@ namespace lvalue
     class AST_Identifier : public AST_Node
     {
     public:
-        AST_Identifier(llvm::IRBuilder<> &builder);
+    	std::string name;
+        AST_Identifier(LValue_Builder &builder, const std::string &name);
         SharedValue emmitCode();
     };
 }

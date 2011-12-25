@@ -33,9 +33,12 @@ namespace lvalue
         AST_Identifier &type;
         AST_Identifier &id;
     public:
-        AST_VariableDeclaration(llvm::IRBuilder<> &builder,
+        AST_VariableDeclaration(LValue_Builder &builder,
         AST_Identifier &id, AST_Identifier &type);
     };
+
+    typedef boost::shared_ptr<AST_VariableDeclaration> SharedVariable;
+    typedef std::vector<SharedVariable> VariableList;
 }
 
 #endif // AST_VARIABLEDECLARATION_H

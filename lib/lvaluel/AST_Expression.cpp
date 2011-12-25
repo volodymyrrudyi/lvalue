@@ -22,7 +22,7 @@
 
 #include "AST_Expression.h"
 
-lvalue::AST_Expression::AST_Expression(llvm::IRBuilder<> &irBuilder) : AST_Node(irBuilder)
+lvalue::AST_Expression::AST_Expression(LValue_Builder &builder) : AST_Node(builder)
 {
 
 }

@@ -7,7 +7,7 @@
 
 #include "LValue_Builder.h"
 
-lvalue::LValue_Builder::LValue_Builder() 
+lvalue::LValue_Builder::LValue_Builder() : llvm::IRBuilder<>(llvm::getGlobalContext())
 {
-    module = new llvm::Module("main", getGlobalContext());
+    module = new llvm::Module("main", llvm::getGlobalContext());
 }

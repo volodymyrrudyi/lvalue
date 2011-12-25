@@ -22,7 +22,7 @@
 
 #include "AST_SimpleTypes.h"
 
-lvalue::AST_Integer::AST_Integer(llvm::IRBuilder<> &irBuilder) : AST_Node(irBuilder)
+lvalue::AST_Integer::AST_Integer(LValue_Builder &builder) : AST_Node(builder)
 {
 
 }
@@ -32,7 +32,7 @@ lvalue::SharedValue lvalue::AST_Integer::emmitCode()
     return SharedValue();
 }
 
-lvalue::AST_Double::AST_Double(llvm::IRBuilder<> &irBuilder) : AST_Node(irBuilder)
+lvalue::AST_Double::AST_Double(LValue_Builder &builder) : AST_Node(builder)
 {
 
 }
@@ -42,7 +42,7 @@ lvalue::SharedValue lvalue::AST_Double::emmitCode()
     return SharedValue();
 }
 
-lvalue::AST_Boolean::AST_Boolean(llvm::IRBuilder<> &irBuilder) : AST_Node(irBuilder)
+lvalue::AST_Boolean::AST_Boolean(LValue_Builder &bBuilder) : AST_Node(builder)
 {
 
 }

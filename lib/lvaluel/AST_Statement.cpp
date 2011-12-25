@@ -22,7 +22,7 @@
 
 #include "AST_Statement.h"
 
-lvalue::AST_Statement::AST_Statement(llvm::IRBuilder<> &irBuilder) : AST_Node(irBuilder)
+lvalue::AST_Statement::AST_Statement(LValue_Builder &builder) : AST_Node(builder)
 {
 
 }
