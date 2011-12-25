@@ -22,33 +22,36 @@
 
 #include "AST_SimpleTypes.h"
 
-lvalue::AST_Integer::AST_Integer(LValue_Builder &builder) : AST_Node(builder)
+lvalue::AST_Integer::AST_Integer(LValue_Builder &builder, long long value)
+	: AST_Node(builder), value(value)
 {
 
 }
 
 lvalue::SharedValue lvalue::AST_Integer::emmitCode()
 {
-    return SharedValue();
+	return SharedValue(llvm::ConstantInt::get(llvm::Type::getInt64Ty(llvm::getGlobalContext()), value, true));
 }
 
-lvalue::AST_Double::AST_Double(LValue_Builder &builder) : AST_Node(builder)
+lvalue::AST_Double::AST_Double(LValue_Builder &builder, long double value)
+	: AST_Node(builder), value(value)
 {
 
 }
 
 lvalue::SharedValue lvalue::AST_Double::emmitCode()
 {
-    return SharedValue();
+	return SharedValue(llvm::ConstantInt::get(llvm::Type::getDoubleTy(llvm::getGlobalContext()), value));
 }
 
-lvalue::AST_Boolean::AST_Boolean(LValue_Builder &bBuilder) : AST_Node(builder)
+lvalue::AST_Boolean::AST_Boolean(LValue_Builder &builder, bool value)
+	: AST_Node(builder), value(value)
 {
 
 }
 
 lvalue::SharedValue lvalue::AST_Boolean::emmitCode()
 {
-    return SharedValue();
+	return SharedValue(llvm::ConstantInt::get(llvm::Type::getInt16Ty(llvm::getGlobalContext()), value, true));
 }
 

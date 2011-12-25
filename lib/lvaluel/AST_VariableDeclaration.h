@@ -30,9 +30,9 @@ namespace lvalue
 {
     class AST_VariableDeclaration : public AST_Node
     {
+    public:
         AST_Identifier &type;
         AST_Identifier &id;
-    public:
         AST_VariableDeclaration(LValue_Builder &builder,
         AST_Identifier &id, AST_Identifier &type);
     };

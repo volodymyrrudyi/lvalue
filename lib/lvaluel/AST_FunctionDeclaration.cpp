@@ -28,3 +28,29 @@ lvalue::AST_FunctionDeclaration::AST_FunctionDeclaration(LValue_Builder &builder
     : AST_Node(builder), type(type), id(id), arguments(arguments), block(block)
 {
 }
+
+lvalue::SharedValue lvalue::AST_FunctionDeclaration::emmitCode()
+{
+	  	std::vector<const llvm::Type*> argTypes;
+	    VariableList::const_iterator it;
+	    for (it = arguments.begin(); it != arguments.end(); it++) {
+	        argTypes.push_back(typeOf((**it).type));
+	    }
+	    llvm::FunctionType *ftype = llvm::FunctionType::get(typeOf(type), argTypes, false);
+	    llvm::Function *function = llvm::Function::Create(ftype, llvm::GlobalValue::InternalLinkage, id.name.c_str(), builder.module);
+	    llvm::BasicBlock *bblock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", function, 0);
+
+	    builder.pushBlock(SharedBasicBlock(bblock));
+
+	    for (it = arguments.begin(); it != arguments.end(); it++) {
+	        (**it).emmitCode();
+	    }
+
+	    block.emmitCode();
+	    builder.CreateRet(bblock);
+	    //ReturnInst::Create(getGlobalContext(), bblock);
+
+	    builder.popBlock();
+	   // std::cout << "Creating function: " << id.name << std::endl;
+	    return SharedValue(function);
+}

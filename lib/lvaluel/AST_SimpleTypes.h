@@ -25,6 +25,9 @@
 
 #include "AST_Node.h"
 
+#include <llvm/DerivedTypes.h>
+#include <llvm/LLVMContext.h>
+
 namespace lvalue
 {
   /**
@@ -33,7 +36,8 @@ namespace lvalue
   class AST_Integer : public AST_Node
   {
     public:
-      AST_Integer(LValue_Builder &builder);
+	  long long value;
+      AST_Integer(LValue_Builder &builder, long long value);
       virtual lvalue::SharedValue emmitCode();
   };
 
@@ -43,7 +47,8 @@ namespace lvalue
   class AST_Double : public AST_Node
   {
     public:
-      AST_Double(LValue_Builder &builder);
+	  long double value;
+      AST_Double(LValue_Builder &builder, long double value);
       virtual lvalue::SharedValue emmitCode();
   };
 
@@ -53,7 +58,8 @@ namespace lvalue
   class AST_Boolean : public AST_Node
   {
     public:
-      AST_Boolean(LValue_Builder &builder);
+	  bool value;
+      AST_Boolean(LValue_Builder &builder, bool value);
       virtual lvalue::SharedValue emmitCode();
   };
 }

@@ -27,6 +27,8 @@
 #include "AST_VariableDeclaration.h"
 #include "AST_Block.h"
 
+#include <llvm/Function.h>
+
 namespace lvalue
 {
 class AST_FunctionDeclaration : public AST_Node
