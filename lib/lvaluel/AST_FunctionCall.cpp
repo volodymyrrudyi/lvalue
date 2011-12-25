@@ -25,7 +25,7 @@
 lvalue::AST_FunctionCall::AST_FunctionCall(LValue_Builder &builder,
         AST_Identifier &id,
         ExpressionList &arguments) 
-        : AST_Node(builder), id(id), arguments(arguments)
+        : AST_Expression(builder), id(id), arguments(arguments)
 {
     
 }

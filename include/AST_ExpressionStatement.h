@@ -20,30 +20,26 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef AST_FUNCTIONDECLARATION_H
-#define AST_FUNCTIONDECLARATION_H
+#ifndef __AST_EXPRESSION_STATEMENT_H
+#define __AST_EXPRESSION_STATEMENT_H
 
-#include "AST_Node.h"
-#include "AST_VariableDeclaration.h"
-#include "AST_Block.h"
-#include "AST_Identifier.h"
 #include "AST_Statement.h"
-#include <llvm/Function.h>
+#include "AST_Expression.h"
 
 namespace lvalue
 {
-class AST_FunctionDeclaration : public AST_Statement
-    {
+  /**
+   * Class represents expression of the LValue abstract syntax tree.
+   */
+  class AST_ExpressionStatement : public AST_Statement
+  {
     public:
-		const AST_Identifier& type;
-		const AST_Identifier& id;
-		VariableList arguments;
-		AST_Block& block;
-        AST_FunctionDeclaration(LValue_Builder &builder,
-        		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
-        		AST_Block &block);
-        Value* emmitCode();
-    };
+
+	  AST_Expression& expression;
+      AST_ExpressionStatement(LValue_Builder &builder, AST_Expression &expression);
+      virtual Value* emmitCode();
+  };
+
 }
 
-#endif // AST_FUNCTIONDECLARATION_H
+#endif

@@ -24,16 +24,22 @@
 #define __AST_SIMPLETYPES_H
 
 #include "AST_Node.h"
+#include "AST_Expression.h"
 
 #include <llvm/DerivedTypes.h>
 #include <llvm/LLVMContext.h>
 
 namespace lvalue
 {
+  class AST_SimpleType : public AST_Expression
+  {
+  public:
+	  AST_SimpleType(LValue_Builder &builder);
+  };
   /**
    * Class represents Integer value of the LValue abstract syntax tree.
    */
-  class AST_Integer : public AST_Node
+  class AST_Integer : public AST_SimpleType
   {
     public:
 	  long long value;
@@ -44,7 +50,7 @@ namespace lvalue
   /**
    * Class represents Integer value of the LValue abstract syntax tree.
    */
-  class AST_Double : public AST_Node
+  class AST_Double : public AST_SimpleType
   {
     public:
 	  long double value;
@@ -55,7 +61,7 @@ namespace lvalue
   /**
    * Class represents Integer value of the LValue abstract syntax tree.
    */
-  class AST_Boolean : public AST_Node
+  class AST_Boolean : public AST_SimpleType
   {
     public:
 	  bool value;

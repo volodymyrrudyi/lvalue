@@ -20,30 +20,18 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef AST_FUNCTIONDECLARATION_H
-#define AST_FUNCTIONDECLARATION_H
+#include "AST_ExpressionStatement.h"
 
-#include "AST_Node.h"
-#include "AST_VariableDeclaration.h"
-#include "AST_Block.h"
-#include "AST_Identifier.h"
-#include "AST_Statement.h"
-#include <llvm/Function.h>
-
-namespace lvalue
+lvalue::AST_ExpressionStatement::AST_ExpressionStatement(LValue_Builder &builder, AST_Expression &expression)
+: AST_Statement(builder), expression(expression)
 {
-class AST_FunctionDeclaration : public AST_Statement
-    {
-    public:
-		const AST_Identifier& type;
-		const AST_Identifier& id;
-		VariableList arguments;
-		AST_Block& block;
-        AST_FunctionDeclaration(LValue_Builder &builder,
-        		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
-        		AST_Block &block);
-        Value* emmitCode();
-    };
+
 }
 
-#endif // AST_FUNCTIONDECLARATION_H
+Value* lvalue::AST_ExpressionStatement::emmitCode()
+{
+    return expression.emmitCode();
+}
+
+
+

@@ -24,7 +24,7 @@
 
 lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder,
     AST_Identifier &id, AST_Identifier &type, AST_Expression* assignmentExpression) :
-    AST_Node(builder),
+    AST_Statement(builder),
     type(type),
     id(id),
     assignmentExpression(assignmentExpression)

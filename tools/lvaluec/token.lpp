@@ -1,7 +1,20 @@
 %{
 #include <string>
-#include "node.h"
-#include "parser.hpp"
+#include "AST_Node.h"
+#include "AST_Block.h"
+#include "AST_Expression.h"
+#include "AST_ExpressionStatement.h"
+#include "AST_Statement.h"
+#include "AST_VariableDeclaration.h"
+#include "AST_FunctionDeclaration.h"
+#include "AST_BinaryOperator.h"
+#include "AST_FunctionCall.h"
+#include "AST_IfStatement.h"
+#include "AST_SimpleTypes.h"
+#include "AST_Identifier.h"
+using namespace llvm;
+using namespace lvalue;
+#include "parse.hpp"
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 #define TOKEN(t) (yylval.token = t)
 extern "C" int yywrap() { return 1; }

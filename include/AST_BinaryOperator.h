@@ -29,7 +29,7 @@
 
 namespace lvalue
 {
-    class AST_BinaryOperator : public AST_Node
+    class AST_BinaryOperator : public AST_Expression
     {
     public:
     	llvm::Instruction::BinaryOps op;

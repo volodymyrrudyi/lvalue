@@ -31,7 +31,7 @@
 namespace lvalue
 
 {
-    class AST_FunctionCall : public AST_Node
+    class AST_FunctionCall : public AST_Expression
     {
     public:
         const AST_Identifier &id;

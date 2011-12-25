@@ -25,7 +25,7 @@
 lvalue::AST_FunctionDeclaration::AST_FunctionDeclaration(LValue_Builder &builder,
 		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
 		AST_Block &block)
-    : AST_Node(builder), type(type), id(id), arguments(arguments), block(block)
+    : AST_Statement(builder), type(type), id(id), arguments(arguments), block(block)
 {
 }
 

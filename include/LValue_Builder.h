@@ -57,14 +57,15 @@ namespace lvalue
     	Function *mainFunction;
     public:
         Module *module;
+        AST_Node* root;
         LValue_Builder();
 
         void pushBlock(BasicBlock* block);
-        BasicBlock *popBlock();
+        void popBlock();
         BasicBlock *currentBlock();
         map<std::string, Value*> &localVariables() { return blocks.top()->localVariables; };
 
-        void generateCode(AST_Node *root);
+        void generateCode();
 
     };
 }

@@ -27,10 +27,11 @@
 #include "AST_Identifier.h"
 #include "AST_Expression.h"
 #include "AST_Assignment.h"
+#include "AST_Statement.h"
 
 namespace lvalue
 {
-    class AST_VariableDeclaration : public AST_Node
+    class AST_VariableDeclaration : public AST_Statement
     {
     public:
         AST_Identifier &type;
@@ -38,7 +39,7 @@ namespace lvalue
         AST_Expression* assignmentExpression;
         AST_VariableDeclaration(LValue_Builder &builder,
         AST_Identifier &id, AST_Identifier &type,
-        	AST_Expression *assignmentExpression);
+        	AST_Expression *assignmentExpression = NULL);
 
         Value* emmitCode();
     };

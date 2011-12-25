@@ -20,12 +20,12 @@ void lvalue::LValue_Builder::pushBlock(BasicBlock* block)
 	blocks.push(lvalueBlock);
 }
 
-BasicBlock* lvalue::LValue_Builder::popBlock()
+void lvalue::LValue_Builder::popBlock()
 {
-	BasicBlock *block = blocks.top()->basicBlock;
+	LValue_Block *block = blocks.top();
 	blocks.pop();
 
-	return block;
+	delete block;
 }
 
 BasicBlock* lvalue::LValue_Builder::currentBlock()
@@ -33,26 +33,20 @@ BasicBlock* lvalue::LValue_Builder::currentBlock()
 	return blocks.top()->basicBlock;
 }
 
-void lvalue::LValue_Builder::generateCode(AST_Node* root)
+void lvalue::LValue_Builder::generateCode()
 {
-    std::cout << "Generating code...\n";
-
-    /* Create the top level interpreter function to call as entry */
     std::vector<const Type*> argTypes;
     FunctionType *ftype = FunctionType::get(Type::getVoidTy(getGlobalContext()), argTypes, false);
     mainFunction = Function::Create(ftype, GlobalValue::InternalLinkage, "main", module);
     BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", mainFunction, 0);
 
-    /* Push a new variable/block context */
+
     pushBlock(bblock);
     root->emmitCode(); /* emit bytecode for the toplevel block */
     ReturnInst::Create(getGlobalContext(), bblock);
     popBlock();
 
 
-    /* Print the bytecode in a human-readable format
-       to see if our program compiled properly
-     */
     std::cout << "Code is generated.\n";
     PassManager pm;
     pm.add(createPrintModulePass(&outs()));

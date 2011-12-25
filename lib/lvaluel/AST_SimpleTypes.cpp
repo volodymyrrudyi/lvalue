@@ -22,8 +22,14 @@
 
 #include "AST_SimpleTypes.h"
 
+lvalue::AST_SimpleType::AST_SimpleType(LValue_Builder &builder)
+	: AST_Expression(builder)
+{
+
+}
+
 lvalue::AST_Integer::AST_Integer(LValue_Builder &builder, long long value)
-	: AST_Node(builder), value(value)
+	: AST_SimpleType(builder), value(value)
 {
 
 }
@@ -34,7 +40,7 @@ Value* lvalue::AST_Integer::emmitCode()
 }
 
 lvalue::AST_Double::AST_Double(LValue_Builder &builder, long double value)
-	: AST_Node(builder), value(value)
+	: AST_SimpleType(builder), value(value)
 {
 
 }
@@ -45,7 +51,7 @@ Value* lvalue::AST_Double::emmitCode()
 }
 
 lvalue::AST_Boolean::AST_Boolean(LValue_Builder &builder, bool value)
-	: AST_Node(builder), value(value)
+	: AST_SimpleType(builder), value(value)
 {
 
 }

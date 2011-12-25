@@ -8,6 +8,7 @@ using namespace std;
 using namespace llvm;
 using namespace lvalue;
 
+extern LValue_Builder builder;
 extern int yyparse();
 
 int main(int argc, char **argv)
@@ -15,10 +16,7 @@ int main(int argc, char **argv)
     InitializeNativeTarget();
     yyparse();
 
-    AST_Block *root;
-
-    LValue_Builder builder;
-    builder.generateCode(root);
+    builder.generateCode();
 
 
     return 0;
