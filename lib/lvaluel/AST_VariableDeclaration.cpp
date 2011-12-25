@@ -23,7 +23,7 @@
 #include "AST_VariableDeclaration.h"
 
 lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder,
-    AST_Identifier &id, AST_Identifier &type, SharedExpression assignmentExpression) :
+    AST_Identifier &id, AST_Identifier &type, AST_Expression* assignmentExpression) :
     AST_Node(builder),
     type(type),
     id(id),
@@ -31,13 +31,13 @@ lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder
 {
 }
 
-lvalue::SharedValue lvalue::AST_VariableDeclaration::emmitCode()
+Value* lvalue::AST_VariableDeclaration::emmitCode()
 {
-    AllocaInst *alloc = new AllocaInst(typeOf(type), id.name.c_str(), builder.currentBlock().get());
-    builder.localVariables()[id.name] = SharedValue(alloc);
-    if (assignmentExpression !=  SharedExpression()) {
+    AllocaInst *alloc = new AllocaInst(typeOf(type), id.name.c_str(), builder.currentBlock());
+    builder.localVariables()[id.name] = alloc;
+    if (assignmentExpression != NULL) {
         AST_Assignment assn(builder, id, *assignmentExpression);
         assn.emmitCode();
     }
-    return SharedValue(alloc);
+    return alloc;
 }

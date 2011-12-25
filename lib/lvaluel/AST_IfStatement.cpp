@@ -27,7 +27,7 @@ lvalue::AST_IfStatement::AST_IfStatement(lvalue::LValue_Builder &builder) : AST_
 }
 
 
-lvalue::SharedValue lvalue::AST_IfStatement::emmitCode()
+Value* lvalue::AST_IfStatement::emmitCode()
 {
-	return SharedValue();
+	return NULL;
 }

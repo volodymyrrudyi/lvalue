@@ -32,7 +32,7 @@ namespace lvalue
 	{
 	public:
 		AST_IfStatement(LValue_Builder &builder);
-		SharedValue emmitCode();
+		Value* emmitCode();
 	};
 }
 #endif // AST_IFSTATEMENT_H

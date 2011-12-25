@@ -30,8 +30,8 @@ lvalue::AST_BinaryOperator::AST_BinaryOperator(LValue_Builder &builder,
     
 }
 
-lvalue::SharedValue lvalue::AST_BinaryOperator::emmitCode()
+Value* lvalue::AST_BinaryOperator::emmitCode()
 {
-        return SharedValue(builder.CreateBinOp(op, rhs.emmitCode().get(), lhs.emmitCode().get(),
-            "binop"));
+        return builder.CreateBinOp(op, rhs.emmitCode(), lhs.emmitCode(),
+            "binop");
 }

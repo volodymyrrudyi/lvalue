@@ -26,12 +26,12 @@ lvalue::AST_Block::AST_Block(lvalue::LValue_Builder &builder) : AST_Node(builder
 {
 }
 
-lvalue::SharedValue lvalue::AST_Block::emmitCode()
+Value* lvalue::AST_Block::emmitCode()
 {
     StatementList::const_iterator i;
 
 
-    SharedValue last;
+    Value* last;
     for (i = statements.begin(); i != statements.end(); i++) {
         last = (**i).emmitCode();
     }

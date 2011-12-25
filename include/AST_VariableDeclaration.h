@@ -35,16 +35,15 @@ namespace lvalue
     public:
         AST_Identifier &type;
         AST_Identifier &id;
-        SharedExpression assignmentExpression;
+        AST_Expression* assignmentExpression;
         AST_VariableDeclaration(LValue_Builder &builder,
         AST_Identifier &id, AST_Identifier &type,
-        	SharedExpression assignmentExpression);
+        	AST_Expression *assignmentExpression);
 
-        SharedValue emmitCode();
+        Value* emmitCode();
     };
 
-    typedef boost::shared_ptr<AST_VariableDeclaration> SharedVariable;
-    typedef std::vector<SharedVariable> VariableList;
+    typedef vector<AST_VariableDeclaration*> VariableList;
 }
 
 #endif // AST_VARIABLEDECLARATION_H

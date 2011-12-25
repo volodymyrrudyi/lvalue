@@ -32,9 +32,9 @@ lvalue::AST_Node::~AST_Node()
 
 }
 
-lvalue::SharedValue lvalue::AST_Node::emmitCode()
+Value* lvalue::AST_Node::emmitCode()
 {
-    return SharedValue();
+    return NULL;
 }
 
 

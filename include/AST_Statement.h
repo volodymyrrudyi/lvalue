@@ -39,11 +39,9 @@ namespace lvalue
     public:
 
       AST_Statement(LValue_Builder &builder);
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
   };
-
-  typedef boost::shared_ptr<AST_Statement> Shared_AST_Statement;
-  typedef std::vector<Shared_AST_Statement> StatementList;
+  typedef std::vector<AST_Statement*> StatementList;
 
 }
 

@@ -36,7 +36,7 @@ namespace lvalue
 	    AST_Expression& rhs;
 		AST_Assignment(LValue_Builder &builder, AST_Identifier& lhs, AST_Expression& rhs);
 
-		SharedValue emmitCode();
+		Value* emmitCode();
 	};
 
 }

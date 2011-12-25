@@ -35,11 +35,10 @@ namespace lvalue
     public:
 
       AST_Expression(LValue_Builder &builder);
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
   };
 
-  typedef boost::shared_ptr<AST_Expression> SharedExpression;
-  typedef std::vector<SharedExpression> ExpressionList;
+  typedef std::vector<AST_Expression*> ExpressionList;
 }
 
 #endif

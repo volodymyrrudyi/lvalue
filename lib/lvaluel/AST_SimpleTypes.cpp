@@ -28,9 +28,9 @@ lvalue::AST_Integer::AST_Integer(LValue_Builder &builder, long long value)
 
 }
 
-lvalue::SharedValue lvalue::AST_Integer::emmitCode()
+Value* lvalue::AST_Integer::emmitCode()
 {
-	return SharedValue(ConstantInt::get(Type::getInt64Ty(getGlobalContext()), value, true));
+	return ConstantInt::get(Type::getInt64Ty(getGlobalContext()), value, true);
 }
 
 lvalue::AST_Double::AST_Double(LValue_Builder &builder, long double value)
@@ -39,9 +39,9 @@ lvalue::AST_Double::AST_Double(LValue_Builder &builder, long double value)
 
 }
 
-lvalue::SharedValue lvalue::AST_Double::emmitCode()
+Value* lvalue::AST_Double::emmitCode()
 {
-	return SharedValue(ConstantInt::get(Type::getDoubleTy(getGlobalContext()), value));
+	return ConstantInt::get(Type::getDoubleTy(getGlobalContext()), value);
 }
 
 lvalue::AST_Boolean::AST_Boolean(LValue_Builder &builder, bool value)
@@ -50,8 +50,8 @@ lvalue::AST_Boolean::AST_Boolean(LValue_Builder &builder, bool value)
 
 }
 
-lvalue::SharedValue lvalue::AST_Boolean::emmitCode()
+Value* lvalue::AST_Boolean::emmitCode()
 {
-	return SharedValue(ConstantInt::get(Type::getInt16Ty(getGlobalContext()), value, true));
+	return ConstantInt::get(Type::getInt16Ty(getGlobalContext()), value, true);
 }
 

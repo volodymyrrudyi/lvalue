@@ -27,16 +27,16 @@ lvalue::AST_Identifier::AST_Identifier(LValue_Builder &builder, const std::strin
 {
 }
 
-lvalue::SharedValue lvalue::AST_Identifier::emmitCode()
+Value* lvalue::AST_Identifier::emmitCode()
 {
 	  	// std::cout << "Creating identifier reference: " << name << std::endl;
 	    if (builder.localVariables().find(name) == builder.localVariables().end()) {
 	        //std::cerr << "undeclared variable " << name << std::endl;
-	        return SharedValue();
+	        return NULL;
 	    }
 
-	    return SharedValue(builder.CreateLoad(builder.localVariables()[name].get()));
-	    //return SharedValue(new LoadInst(builder.localVariables()[name], "", false, builder.currentBlock()));
+	    return builder.CreateLoad(builder.localVariables()[name]);
+	    //return Value*(new LoadInst(builder.localVariables()[name], "", false, builder.currentBlock()));
 }
 
 const Type *lvalue::typeOf(const AST_Identifier& type)

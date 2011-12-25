@@ -41,7 +41,7 @@ class AST_FunctionDeclaration : public AST_Node
         AST_FunctionDeclaration(LValue_Builder &builder,
         		AST_Identifier &type, AST_Identifier &id, VariableList arguments,
         		AST_Block &block);
-        SharedValue emmitCode();
+        Value* emmitCode();
     };
 }
 

@@ -32,9 +32,9 @@ namespace lvalue
     public:
     	std::string name;
         AST_Identifier(LValue_Builder &builder, const std::string &name);
-        SharedValue emmitCode();
+        Value* emmitCode();
     };
 
-    const llvm::Type* typeOf(const AST_Identifier& type);
+    const Type* typeOf(const AST_Identifier& type);
 }
 #endif // AST_IDENTIFIER_H

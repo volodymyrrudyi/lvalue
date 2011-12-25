@@ -30,7 +30,7 @@ lvalue::AST_FunctionCall::AST_FunctionCall(LValue_Builder &builder,
     
 }
 
-lvalue::SharedValue lvalue::AST_FunctionCall::emmitCode()
+Value* lvalue::AST_FunctionCall::emmitCode()
 {
 	  Function *function = builder.module->getFunction(id.name.c_str());
 		if (function == NULL) {
@@ -39,9 +39,9 @@ lvalue::SharedValue lvalue::AST_FunctionCall::emmitCode()
 		std::vector<Value*> args;
 		ExpressionList::const_iterator it;
 		for (it = arguments.begin(); it != arguments.end(); it++) {
-			args.push_back((**it).emmitCode().get());
+			args.push_back((**it).emmitCode());
 		}
 		CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
 		//std::cout << "Creating method call: " << id.name << std::endl;
-		return SharedValue(call);
+		return call;
 }

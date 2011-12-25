@@ -27,9 +27,9 @@ lvalue::AST_Statement::AST_Statement(LValue_Builder &builder) : AST_Node(builder
 
 }
 
-lvalue::SharedValue lvalue::AST_Statement::emmitCode()
+Value* lvalue::AST_Statement::emmitCode()
 {
-    return SharedValue();
+    return NULL;
 }
 
 

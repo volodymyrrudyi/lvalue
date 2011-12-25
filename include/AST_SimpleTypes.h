@@ -38,7 +38,7 @@ namespace lvalue
     public:
 	  long long value;
       AST_Integer(LValue_Builder &builder, long long value);
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
   };
 
   /**
@@ -49,7 +49,7 @@ namespace lvalue
     public:
 	  long double value;
       AST_Double(LValue_Builder &builder, long double value);
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
   };
 
   /**
@@ -60,7 +60,7 @@ namespace lvalue
     public:
 	  bool value;
       AST_Boolean(LValue_Builder &builder, bool value);
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
   };
 }
 

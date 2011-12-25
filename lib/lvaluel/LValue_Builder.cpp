@@ -13,22 +13,22 @@ lvalue::LValue_Builder::LValue_Builder() : IRBuilder<>(getGlobalContext())
     module = new Module("main", getGlobalContext());
 }
 
-void lvalue::LValue_Builder::pushBlock(SharedBasicBlock block)
+void lvalue::LValue_Builder::pushBlock(BasicBlock* block)
 {
-	SharedLValue_Block lvalueBlock = SharedLValue_Block(new LValue_Block());
+	LValue_Block* lvalueBlock = new LValue_Block();
 	lvalueBlock->basicBlock = block;
 	blocks.push(lvalueBlock);
 }
 
-lvalue::SharedBasicBlock lvalue::LValue_Builder::popBlock()
+BasicBlock* lvalue::LValue_Builder::popBlock()
 {
-	SharedBasicBlock block = blocks.top()->basicBlock;
+	BasicBlock *block = blocks.top()->basicBlock;
 	blocks.pop();
 
 	return block;
 }
 
-lvalue::SharedBasicBlock lvalue::LValue_Builder::currentBlock()
+BasicBlock* lvalue::LValue_Builder::currentBlock()
 {
 	return blocks.top()->basicBlock;
 }
@@ -44,7 +44,7 @@ void lvalue::LValue_Builder::generateCode(AST_Node* root)
     BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", mainFunction, 0);
 
     /* Push a new variable/block context */
-    pushBlock(SharedBasicBlock(bblock));
+    pushBlock(bblock);
     root->emmitCode(); /* emit bytecode for the toplevel block */
     ReturnInst::Create(getGlobalContext(), bblock);
     popBlock();

@@ -28,15 +28,15 @@ lvalue::AST_Assignment::AST_Assignment(LValue_Builder &builder, AST_Identifier& 
 
 }
 
-lvalue::SharedValue lvalue::AST_Assignment::emmitCode()
+Value* lvalue::AST_Assignment::emmitCode()
 {
     if (builder.localVariables().find(lhs.name) == builder.localVariables().end()) {
-        return SharedValue();
+        return NULL;
     }
-    return SharedValue(new StoreInst(rhs.emmitCode().get(),
-    		builder.localVariables()[lhs.name].get(),
+    return new StoreInst(rhs.emmitCode(),
+    		builder.localVariables()[lhs.name],
     		false,
-    		builder.currentBlock().get()));
+    		builder.currentBlock());
 }
 
 

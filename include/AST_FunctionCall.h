@@ -37,7 +37,7 @@ namespace lvalue
         const AST_Identifier &id;
         ExpressionList arguments;
         AST_FunctionCall(LValue_Builder &builder,AST_Identifier &id,ExpressionList &arguments);
-        SharedValue emmitCode();
+        Value* emmitCode();
     };
 }
 #endif // AST_FUNCTIONCALL_H

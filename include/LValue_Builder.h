@@ -17,7 +17,6 @@
 #include <llvm/Module.h>
 #include <llvm/BasicBlock.h>
 #include <llvm/Value.h>
-#include <boost/shared_ptr.hpp>
 #include <llvm/Module.h>
 #include <llvm/Function.h>
 #include <llvm/Type.h>
@@ -44,30 +43,26 @@ namespace lvalue
 {
 
 	class AST_Node;
-	typedef boost::shared_ptr<llvm::Value> SharedValue;
-	typedef boost::shared_ptr<llvm::BasicBlock> SharedBasicBlock;
 
 	struct LValue_Block
 	{
 	public:
-		SharedBasicBlock basicBlock;
-		std::map<std::string, SharedValue> localVariables;
+		BasicBlock *basicBlock;
+		map<std::string, Value*> localVariables;
 	};
-
-	typedef boost::shared_ptr<LValue_Block> SharedLValue_Block;
 
     class LValue_Builder : public llvm::IRBuilder<> {
     protected:
-    	std::stack<SharedLValue_Block> blocks;
-    	llvm::Function *mainFunction;
+    	stack<LValue_Block*> blocks;
+    	Function *mainFunction;
     public:
-        llvm::Module *module;
+        Module *module;
         LValue_Builder();
 
-        void pushBlock(SharedBasicBlock block);
-        SharedBasicBlock popBlock();
-        SharedBasicBlock currentBlock();
-        std::map<std::string, SharedValue> &localVariables() { return blocks.top()->localVariables; };
+        void pushBlock(BasicBlock* block);
+        BasicBlock *popBlock();
+        BasicBlock *currentBlock();
+        map<std::string, Value*> &localVariables() { return blocks.top()->localVariables; };
 
         void generateCode(AST_Node *root);
 

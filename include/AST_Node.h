@@ -40,7 +40,7 @@ namespace lvalue
       /**
        * Virtual method for emmiting LLVM IR code of this AST Node
        */
-      virtual lvalue::SharedValue emmitCode();
+      virtual Value* emmitCode();
 
       /**
        * Empty virtual destructor to allow avoid memory leaks in child classes.

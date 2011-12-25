@@ -29,7 +29,7 @@ lvalue::AST_FunctionDeclaration::AST_FunctionDeclaration(LValue_Builder &builder
 {
 }
 
-lvalue::SharedValue lvalue::AST_FunctionDeclaration::emmitCode()
+Value* lvalue::AST_FunctionDeclaration::emmitCode()
 {
 	  	std::vector<const Type*> argTypes;
 	    VariableList::const_iterator it;
@@ -40,7 +40,7 @@ lvalue::SharedValue lvalue::AST_FunctionDeclaration::emmitCode()
 	    Function *function = Function::Create(ftype, GlobalValue::InternalLinkage, id.name.c_str(), builder.module);
 	    BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", function, 0);
 
-	    builder.pushBlock(SharedBasicBlock(bblock));
+	    builder.pushBlock(bblock);
 
 	    for (it = arguments.begin(); it != arguments.end(); it++) {
 	        (**it).emmitCode();
@@ -52,5 +52,5 @@ lvalue::SharedValue lvalue::AST_FunctionDeclaration::emmitCode()
 
 	    builder.popBlock();
 	   // std::cout << "Creating function: " << id.name << std::endl;
-	    return SharedValue(function);
+	    return function;
 }

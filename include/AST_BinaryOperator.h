@@ -37,7 +37,7 @@ namespace lvalue
         AST_Expression& rhs;
         AST_BinaryOperator(LValue_Builder &builder,
         AST_Expression &lhs, llvm::Instruction::BinaryOps op, AST_Expression &rhs);
-        SharedValue emmitCode();
+        Value* emmitCode();
     };
 }
 
