@@ -24,13 +24,9 @@
 #define __AST_NODE_H
 
 #include "LValue_Builder.h"
-#include <llvm/Value.h>
-#include <boost/shared_ptr.hpp>
 
 namespace lvalue
 {
-  typedef boost::shared_ptr<llvm::Value> SharedValue;
-
   /**
    * Class represents node of the LValue abstract syntax tree.
    */

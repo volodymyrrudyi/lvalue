@@ -23,10 +23,21 @@
 #ifndef AST_ASSIGNMENT_H
 #define AST_ASSIGNMENT_H
 
-class AST_Assignment
-{
-public:
-    AST_Assignment();
-};
+#include "AST_Expression.h"
+#include "AST_Identifier.h"
 
+namespace lvalue
+{
+
+	class AST_Assignment : public AST_Expression
+	{
+	public:
+	    AST_Identifier& lhs;
+	    AST_Expression& rhs;
+		AST_Assignment(LValue_Builder &builder, AST_Identifier& lhs, AST_Expression& rhs);
+
+		SharedValue emmitCode();
+	};
+
+}
 #endif // AST_ASSIGNMENT_H

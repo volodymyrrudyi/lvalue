@@ -11,3 +11,23 @@ lvalue::LValue_Builder::LValue_Builder() : llvm::IRBuilder<>(llvm::getGlobalCont
 {
     module = new llvm::Module("main", llvm::getGlobalContext());
 }
+
+void lvalue::LValue_Builder::pushBlock(SharedBasicBlock block)
+{
+	SharedLValue_Block lvalueBlock = SharedLValue_Block(new LValue_Block());
+	lvalueBlock->basicBlock = block;
+	blocks.push(lvalueBlock);
+}
+
+lvalue::SharedBasicBlock lvalue::LValue_Builder::popBlock()
+{
+	SharedBasicBlock block = blocks.top()->basicBlock;
+	blocks.pop();
+
+	return block;
+}
+
+lvalue::SharedBasicBlock lvalue::LValue_Builder::currentBlock()
+{
+	return blocks.top()->basicBlock;
+}
