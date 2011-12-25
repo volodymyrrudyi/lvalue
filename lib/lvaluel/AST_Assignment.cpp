@@ -33,7 +33,7 @@ lvalue::SharedValue lvalue::AST_Assignment::emmitCode()
     if (builder.localVariables().find(lhs.name) == builder.localVariables().end()) {
         return SharedValue();
     }
-    return SharedValue(new llvm::StoreInst(rhs.emmitCode().get(),
+    return SharedValue(new StoreInst(rhs.emmitCode().get(),
     		builder.localVariables()[lhs.name].get(),
     		false,
     		builder.currentBlock().get()));

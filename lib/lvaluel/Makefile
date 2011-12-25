@@ -1,6 +1,6 @@
 
 LEVEL=../..
-LIBRARYNAME = LLValueL
+LIBRARYNAME = lvaluel
 LINK_COMPONENTS := jit interpreter nativecodegen
 REQUIRES_RTTI := 1
 

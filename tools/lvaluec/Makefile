@@ -5,14 +5,6 @@ YFLAGS = -d
 TOOLNAME = lvaluec
 LINK_COMPONENTS := all engine jit interpreter nativecodegen
 REQUIRES_RTTI := 1
-ExtraSource = parser.cpp tokens.cpp
-
-$(TOOLNAME): parser.cpp codegen.cpp main.cpp  tokens.cpp
-
-tokens.cpp: parser.cpp   
-	$(LEX)  -o tokens.cpp tokens.l
-
-parser.cpp: parser.y
-	$(YACC) $(YFLAGS) parser.y -o parser.cpp
+USEDLIBS = lvaluel
 
 include $(LEVEL)/Makefile.common

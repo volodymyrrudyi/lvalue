@@ -22,6 +22,12 @@
 
 #include "AST_IfStatement.h"
 
-AST_IfStatement::AST_IfStatement()
+lvalue::AST_IfStatement::AST_IfStatement(lvalue::LValue_Builder &builder) : AST_Node(builder)
 {
+}
+
+
+lvalue::SharedValue lvalue::AST_IfStatement::emmitCode()
+{
+	return SharedValue();
 }

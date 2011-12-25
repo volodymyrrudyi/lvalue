@@ -36,19 +36,19 @@ lvalue::SharedValue lvalue::AST_Identifier::emmitCode()
 	    }
 
 	    return SharedValue(builder.CreateLoad(builder.localVariables()[name].get()));
-	    //return SharedValue(new llvm::LoadInst(builder.localVariables()[name], "", false, builder.currentBlock()));
+	    //return SharedValue(new LoadInst(builder.localVariables()[name], "", false, builder.currentBlock()));
 }
 
-const llvm::Type *lvalue::typeOf(const AST_Identifier& type)
+const Type *lvalue::typeOf(const AST_Identifier& type)
 {
     if (type.name.compare("int") == 0) {
-        return llvm::Type::getInt64Ty(llvm::getGlobalContext());
+        return Type::getInt64Ty(getGlobalContext());
     }
     else if (type.name.compare("double") == 0) {
-        return llvm::Type::getDoubleTy(llvm::getGlobalContext());
+        return Type::getDoubleTy(getGlobalContext());
     }
     else if (type.name.compare("boolean") == 0) {
-           return llvm::Type::getInt16Ty(llvm::getGlobalContext());
+           return Type::getInt16Ty(getGlobalContext());
        }
-    return llvm::Type::getVoidTy(llvm::getGlobalContext());
+    return Type::getVoidTy(getGlobalContext());
 }

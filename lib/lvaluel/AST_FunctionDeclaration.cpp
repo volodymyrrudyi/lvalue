@@ -31,14 +31,14 @@ lvalue::AST_FunctionDeclaration::AST_FunctionDeclaration(LValue_Builder &builder
 
 lvalue::SharedValue lvalue::AST_FunctionDeclaration::emmitCode()
 {
-	  	std::vector<const llvm::Type*> argTypes;
+	  	std::vector<const Type*> argTypes;
 	    VariableList::const_iterator it;
 	    for (it = arguments.begin(); it != arguments.end(); it++) {
 	        argTypes.push_back(typeOf((**it).type));
 	    }
-	    llvm::FunctionType *ftype = llvm::FunctionType::get(typeOf(type), argTypes, false);
-	    llvm::Function *function = llvm::Function::Create(ftype, llvm::GlobalValue::InternalLinkage, id.name.c_str(), builder.module);
-	    llvm::BasicBlock *bblock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", function, 0);
+	    FunctionType *ftype = FunctionType::get(typeOf(type), argTypes, false);
+	    Function *function = Function::Create(ftype, GlobalValue::InternalLinkage, id.name.c_str(), builder.module);
+	    BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", function, 0);
 
 	    builder.pushBlock(SharedBasicBlock(bblock));
 

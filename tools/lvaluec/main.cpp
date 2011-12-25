@@ -1,21 +1,25 @@
 #include <iostream>
-#include "codegen.h"
-#include "node.h"
+#include <llvm/ExecutionEngine/JIT.h>
+
+#include "LValue_Builder.h"
+#include "AST_Block.h"
 
 using namespace std;
+using namespace llvm;
+using namespace lvalue;
 
 extern int yyparse();
-extern NBlock* programBlock;
 
 int main(int argc, char **argv)
 {
     InitializeNativeTarget();
     yyparse();
-    std::cout << programBlock << std::endl;
 
-    CodeGenContext context;
-    context.generateCode(*programBlock);
-    context.runCode();
+    AST_Block *root;
+
+    LValue_Builder builder;
+    builder.generateCode(root);
+
 
     return 0;
 }

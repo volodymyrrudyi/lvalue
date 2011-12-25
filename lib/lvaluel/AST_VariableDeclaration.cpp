@@ -33,7 +33,7 @@ lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder
 
 lvalue::SharedValue lvalue::AST_VariableDeclaration::emmitCode()
 {
-    llvm::AllocaInst *alloc = new llvm::AllocaInst(typeOf(type), id.name.c_str(), builder.currentBlock().get());
+    AllocaInst *alloc = new AllocaInst(typeOf(type), id.name.c_str(), builder.currentBlock().get());
     builder.localVariables()[id.name] = SharedValue(alloc);
     if (assignmentExpression !=  SharedExpression()) {
         AST_Assignment assn(builder, id, *assignmentExpression);
