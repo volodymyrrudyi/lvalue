@@ -23,8 +23,8 @@
 #ifndef __AST_NODE_H
 #define __AST_NODE_H
 
+#include "LValue_Builder.h"
 #include <llvm/Value.h>
-#include <llvm/Support/IRBuilder.h>
 #include <boost/shared_ptr.hpp>
 
 namespace lvalue

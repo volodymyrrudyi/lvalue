@@ -22,6 +22,22 @@
 
 #include "AST_FunctionCall.h"
 
-AST_FunctionCall::AST_FunctionCall()
+lvalue::AST_FunctionCall::AST_FunctionCall(lvalue::LValueBuilder &builder,
+        AST_Identifier &id,
+        ExpressionList &arguments) 
+        : AST_Node(builder), id(id), arguments(arguments)
 {
+    
+  llvm::Function *function = builder.module->getFunction(id.name.c_str());
+	if (function == NULL) {
+		//std::cerr << "no such function " << id.name << std::endl;
+	}
+	std::vector<llvm::Value*> args;
+	ExpressionList::const_iterator it;
+	for (it = arguments.begin(); it != arguments.end(); it++) {
+		args.push_back((**it).emmitCode());
+	}
+	llvm::CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
+	//std::cout << "Creating method call: " << id.name << std::endl;
+	return call;
 }

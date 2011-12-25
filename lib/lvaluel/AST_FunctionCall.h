@@ -23,10 +23,21 @@
 #ifndef AST_FUNCTIONCALL_H
 #define AST_FUNCTIONCALL_H
 
-class AST_FunctionCall
-{
-public:
-    AST_FunctionCall();
-};
+#include "AST_Node.h"
+#include "AST_Identifier.h"
+#include "AST_Expression.h"
+#include <llvm/Function.h>
 
+namespace lvalue
+
+{
+    class AST_FunctionCall : public AST_Node
+    {
+    public:
+        const AST_Identifier &id;
+        ExpressionList arguments;
+        AST_FunctionCall(LValueBuilder &builder,AST_Identifier &id,ExpressionList &arguments);
+        SharedValue emmitCode();
+    };
+}
 #endif // AST_FUNCTIONCALL_H
