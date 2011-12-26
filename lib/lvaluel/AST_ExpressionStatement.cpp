@@ -25,7 +25,6 @@
 lvalue::AST_ExpressionStatement::AST_ExpressionStatement(LValue_Builder &builder, AST_Expression &expression)
 : AST_Statement(builder), expression(expression)
 {
-
 }
 
 Value* lvalue::AST_ExpressionStatement::emmitCode()

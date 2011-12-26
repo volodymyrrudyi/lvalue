@@ -25,13 +25,20 @@
 
 
 #include "AST_Node.h"
+#include "AST_Statement.h"
+#include "AST_Block.h"
+#include "AST_Expression.h"
 
 namespace lvalue
 {
-	class AST_IfStatement : public AST_Node
+	class AST_IfStatement : public AST_Statement
 	{
 	public:
-		AST_IfStatement(LValue_Builder &builder);
+	    AST_Expression& conditionExpression;
+	    AST_Block &thenBlock;
+	    AST_Block &elseBlock;
+		AST_IfStatement(LValue_Builder &builder, AST_Expression& conditionExpression,
+				AST_Block &thenBlock, AST_Block &elseBlock);
 		Value* emmitCode();
 	};
 }

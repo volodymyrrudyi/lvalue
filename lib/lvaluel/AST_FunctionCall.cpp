@@ -27,21 +27,21 @@ lvalue::AST_FunctionCall::AST_FunctionCall(LValue_Builder &builder,
         ExpressionList &arguments) 
         : AST_Expression(builder), id(id), arguments(arguments)
 {
-    
 }
 
 Value* lvalue::AST_FunctionCall::emmitCode()
 {
-	  Function *function = builder.module->getFunction(id.name.c_str());
-		if (function == NULL) {
-			//std::cerr << "no such function " << id.name << std::endl;
-		}
-		std::vector<Value*> args;
-		ExpressionList::const_iterator it;
-		for (it = arguments.begin(); it != arguments.end(); it++) {
-			args.push_back((**it).emmitCode());
-		}
-		CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
-		//std::cout << "Creating method call: " << id.name << std::endl;
-		return call;
+	Function *function = builder.module->getFunction(id.name.c_str());
+	if (function == NULL) {
+		std::cerr << "no such function " << id.name << std::endl;
+	}
+	std::vector<Value*> args;
+	ExpressionList::const_iterator it;
+	for (it = arguments.begin(); it != arguments.end(); it++) {
+		args.push_back((**it).emmitCode());
+	}
+	builder.SetInsertPoint(builder.currentBlock());
+	CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
+	std::cout << "Creating method call: " << id.name << std::endl;
+	return call;
 }

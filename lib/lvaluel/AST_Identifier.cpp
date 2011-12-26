@@ -23,20 +23,26 @@
 #include "AST_Identifier.h"
 
 lvalue::AST_Identifier::AST_Identifier(LValue_Builder &builder, const std::string &name) :
-    AST_Node(builder), name(name)
+    AST_Expression(builder), name(name)
 {
 }
 
 Value* lvalue::AST_Identifier::emmitCode()
 {
-	  	// std::cout << "Creating identifier reference: " << name << std::endl;
+	  	std::cout << "Creating identifier reference: " << name << std::endl;
 	    if (builder.localVariables().find(name) == builder.localVariables().end()) {
-	        //std::cerr << "undeclared variable " << name << std::endl;
+	        std::cerr << "undeclared variable " << name << std::endl;
+
+	        for (map<string, Value*>::iterator i = builder.localVariables().begin();
+	        		i != builder.localVariables().end(); i++)
+	        {
+	        	cout << "LOCAL: " << i->first << endl;
+	        }
 	        return NULL;
 	    }
 
-	    return builder.CreateLoad(builder.localVariables()[name]);
-	    //return Value*(new LoadInst(builder.localVariables()[name], "", false, builder.currentBlock()));
+	    //return builder.CreateLoad(builder.localVariables()[name]);
+	    return new LoadInst(builder.localVariables()[name], "", false, builder.currentBlock());
 }
 
 const Type *lvalue::typeOf(const AST_Identifier& type)

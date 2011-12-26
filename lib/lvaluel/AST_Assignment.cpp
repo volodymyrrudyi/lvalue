@@ -25,12 +25,13 @@
 lvalue::AST_Assignment::AST_Assignment(LValue_Builder &builder, AST_Identifier& lhs, AST_Expression& rhs)
 	: AST_Expression(builder), lhs(lhs), rhs(rhs)
 {
-
 }
 
 Value* lvalue::AST_Assignment::emmitCode()
 {
+	cout << "Createing assignment" << endl;
     if (builder.localVariables().find(lhs.name) == builder.localVariables().end()) {
+    	cerr << "Variable " << lhs.name << " not found" << endl;
         return NULL;
     }
     return new StoreInst(rhs.emmitCode(),

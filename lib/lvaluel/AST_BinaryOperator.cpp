@@ -27,7 +27,6 @@ lvalue::AST_BinaryOperator::AST_BinaryOperator(LValue_Builder &builder,
         AST_Expression &lhs, Instruction::BinaryOps op, AST_Expression &rhs)
 : AST_Expression(builder), op(op), lhs(lhs), rhs(rhs)
 {
-    
 }
 
 Value* lvalue::AST_BinaryOperator::emmitCode()

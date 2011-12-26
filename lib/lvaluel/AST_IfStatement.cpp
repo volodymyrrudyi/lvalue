@@ -22,12 +22,56 @@
 
 #include "AST_IfStatement.h"
 
-lvalue::AST_IfStatement::AST_IfStatement(lvalue::LValue_Builder &builder) : AST_Node(builder)
+lvalue::AST_IfStatement::AST_IfStatement(LValue_Builder &builder, AST_Expression& conditionExpression,
+		AST_Block &thenBlock, AST_Block &elseBlock)
+	: AST_Statement(builder), conditionExpression(conditionExpression),
+	  thenBlock(thenBlock), elseBlock(elseBlock)
 {
 }
 
 
 Value* lvalue::AST_IfStatement::emmitCode()
 {
-	return NULL;
+	 	Value *CondV = conditionExpression.emmitCode();
+	    if (CondV == 0) return 0;
+
+	    // Conversion to comparsion with 0.0
+	  //  builder.SetInsertPoint(builder.currentBlock());
+	    CondV = builder.CreateFCmpONE(CondV,
+	                                  ConstantFP::get(getGlobalContext(), APFloat(0.0)),
+	                                  "ifcond");
+
+	    Function *TheFunction = builder.currentBlock()->getParent();
+
+	    BasicBlock *ThenBB = BasicBlock::Create(getGlobalContext(), "then", TheFunction);
+	    BasicBlock *ElseBB = BasicBlock::Create(getGlobalContext(), "else");
+	    BasicBlock *MergeBB = BasicBlock::Create(getGlobalContext(), "ifcont");
+
+	    builder.SetInsertPoint(builder.currentBlock());
+	    builder.CreateCondBr(CondV, ThenBB, ElseBB);
+	    builder.SetInsertPoint(ThenBB);
+
+	    Value *ThenV = this->thenBlock.emmitCode();
+	    if (ThenV == 0) return 0;
+
+	    BranchInst::Create(MergeBB);
+	    ThenBB = builder.GetInsertBlock();
+
+	    TheFunction->getBasicBlockList().push_back(ElseBB);
+	    builder.SetInsertPoint(ElseBB);
+
+	    Value *ElseV = this->elseBlock.emmitCode();
+	    if (ElseV == 0) return 0;
+
+	    builder.CreateBr(MergeBB);
+	    ElseBB = builder.GetInsertBlock();
+
+	    TheFunction->getBasicBlockList().push_back(MergeBB);
+	    builder.SetInsertPoint(MergeBB);
+	    PHINode *PN = builder.CreatePHI(Type::getDoubleTy(getGlobalContext()),
+	                                    "iftmp");
+
+	    PN->addIncoming(ThenV, ThenBB);
+	    PN->addIncoming(ElseV, ElseBB);
+	    return PN;
 }

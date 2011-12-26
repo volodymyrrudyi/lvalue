@@ -150,7 +150,6 @@
     using namespace lvalue;
     using namespace llvm;
     #include <cstdio>
-    static AST_Node *programBlock; /* the top level root node of our final AST */
     extern int yylex();
 	LValue_Builder builder;
     void yyerror(const char *s) { printf("ERROR: %s\n", s); }
@@ -197,7 +196,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 48 "parse.ypp"
+#line 47 "parse.ypp"
 {
     AST_Node *node;
     AST_Block *block;
@@ -211,7 +210,7 @@ typedef union YYSTYPE
     int token;
 }
 /* Line 193 of yacc.c.  */
-#line 215 "parse.cpp"
+#line 214 "parse.cpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -224,7 +223,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 228 "parse.cpp"
+#line 227 "parse.cpp"
 
 #ifdef short
 # undef short
@@ -523,11 +522,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    91,    91,    94,    95,    98,    98,    98,    99,   102,
-     103,   106,   107,   110,   114,   115,   116,   118,   119,   123,
-     126,   127,   130,   131,   132,   133,   134,   135,   138,   139,
-     140,   143,   143,   143,   143,   143,   143,   144,   144,   144,
-     144
+       0,    81,    81,    84,    85,    88,    88,    88,    89,    92,
+      93,    96,    97,   100,   104,   105,   106,   108,   109,   113,
+     116,   117,   120,   121,   122,   123,   124,   125,   128,   129,
+     130,   133,   133,   133,   133,   133,   133,   134,   134,   134,
+     134
 };
 #endif
 
@@ -1484,133 +1483,133 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 91 "parse.ypp"
-    { printf("program\n"); builder.root = (yyvsp[(1) - (1)].block); ;}
+#line 81 "parse.ypp"
+    { builder.root = (yyvsp[(1) - (1)].block); ;}
     break;
 
   case 3:
-#line 94 "parse.ypp"
+#line 84 "parse.ypp"
     { (yyval.block) = new AST_Block(builder); (yyval.block)->statements.push_back((yyvsp[(1) - (1)].stmt)); ;}
     break;
 
   case 4:
-#line 95 "parse.ypp"
+#line 85 "parse.ypp"
     { (yyvsp[(1) - (2)].block)->statements.push_back((yyvsp[(2) - (2)].stmt)); ;}
     break;
 
   case 8:
-#line 99 "parse.ypp"
+#line 89 "parse.ypp"
     { (yyval.stmt) = new AST_ExpressionStatement(builder, *(yyvsp[(1) - (1)].expr)); ;}
     break;
 
   case 9:
-#line 102 "parse.ypp"
-    { (yyval.block) = (yyvsp[(2) - (3)].block); printf("Non-empty block\n"); ;}
+#line 92 "parse.ypp"
+    { (yyval.block) = (yyvsp[(2) - (3)].block);;}
     break;
 
   case 10:
-#line 103 "parse.ypp"
-    { (yyval.block) = new AST_Block(builder);printf("Non-empty block\n"); ;}
+#line 93 "parse.ypp"
+    { (yyval.block) = new AST_Block(builder);;}
     break;
 
   case 11:
-#line 106 "parse.ypp"
-    { (yyval.stmt) = new AST_VariableDeclaration(builder, *(yyvsp[(1) - (2)].ident), *(yyvsp[(2) - (2)].ident)); ;}
+#line 96 "parse.ypp"
+    { (yyval.stmt) = new AST_VariableDeclaration(builder, *(yyvsp[(2) - (2)].ident), *(yyvsp[(1) - (2)].ident)); ;}
     break;
 
   case 12:
-#line 107 "parse.ypp"
-    { (yyval.stmt) = new AST_VariableDeclaration(builder, *(yyvsp[(1) - (4)].ident), *(yyvsp[(2) - (4)].ident), (yyvsp[(4) - (4)].expr)); ;}
+#line 97 "parse.ypp"
+    { (yyval.stmt) = new AST_VariableDeclaration(builder, *(yyvsp[(2) - (4)].ident), *(yyvsp[(1) - (4)].ident), (yyvsp[(4) - (4)].expr)); ;}
     break;
 
   case 13:
-#line 111 "parse.ypp"
+#line 101 "parse.ypp"
     { (yyval.stmt) = new AST_FunctionDeclaration(builder, *(yyvsp[(7) - (8)].ident), *(yyvsp[(2) - (8)].ident), *(yyvsp[(4) - (8)].varvec), *(yyvsp[(8) - (8)].block)); delete (yyvsp[(4) - (8)].varvec); ;}
     break;
 
   case 14:
-#line 114 "parse.ypp"
+#line 104 "parse.ypp"
     { (yyval.varvec) = new VariableList(); ;}
     break;
 
   case 15:
-#line 115 "parse.ypp"
+#line 105 "parse.ypp"
     { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[(1) - (1)].var_decl)); ;}
     break;
 
   case 16:
-#line 116 "parse.ypp"
+#line 106 "parse.ypp"
     { (yyvsp[(1) - (3)].varvec)->push_back((yyvsp[(3) - (3)].var_decl)); ;}
     break;
 
   case 17:
-#line 118 "parse.ypp"
-    { printf("if statement\n"); /*$$ = new AST_IfStatement(builder, *$3, *$5, *$7);*/ ;}
+#line 108 "parse.ypp"
+    {  (yyval.stmt) = new AST_IfStatement(builder, *(yyvsp[(3) - (7)].expr), *(yyvsp[(5) - (7)].block), *(yyvsp[(7) - (7)].block)); ;}
     break;
 
   case 18:
-#line 119 "parse.ypp"
+#line 109 "parse.ypp"
     { ;}
     break;
 
   case 19:
-#line 123 "parse.ypp"
+#line 113 "parse.ypp"
     { (yyval.ident) = new AST_Identifier(builder, *(yyvsp[(1) - (1)].string)); delete (yyvsp[(1) - (1)].string); ;}
     break;
 
   case 20:
-#line 126 "parse.ypp"
+#line 116 "parse.ypp"
     { (yyval.expr) = new AST_Integer(builder, atol((yyvsp[(1) - (1)].string)->c_str())); delete (yyvsp[(1) - (1)].string); ;}
     break;
 
   case 21:
-#line 127 "parse.ypp"
+#line 117 "parse.ypp"
     { (yyval.expr) = new AST_Double(builder, atof((yyvsp[(1) - (1)].string)->c_str())); delete (yyvsp[(1) - (1)].string); ;}
     break;
 
   case 22:
-#line 130 "parse.ypp"
+#line 120 "parse.ypp"
     { (yyval.expr) = new AST_Assignment(builder, *(yyvsp[(1) - (3)].ident), *(yyvsp[(3) - (3)].expr)); ;}
     break;
 
   case 23:
-#line 131 "parse.ypp"
+#line 121 "parse.ypp"
     { (yyval.expr) = new AST_FunctionCall(builder, *(yyvsp[(1) - (4)].ident), *(yyvsp[(3) - (4)].exprvec)); delete (yyvsp[(3) - (4)].exprvec); ;}
     break;
 
   case 24:
-#line 132 "parse.ypp"
+#line 122 "parse.ypp"
     { (yyval.ident) = (yyvsp[(1) - (1)].ident); ;}
     break;
 
   case 26:
-#line 134 "parse.ypp"
+#line 124 "parse.ypp"
     { (yyval.expr) = new AST_BinaryOperator(builder, *(yyvsp[(1) - (3)].expr), toBinaryOp((yyvsp[(2) - (3)].token)) , *(yyvsp[(3) - (3)].expr)); ;}
     break;
 
   case 27:
-#line 135 "parse.ypp"
+#line 125 "parse.ypp"
     { (yyval.expr) = (yyvsp[(2) - (3)].expr); ;}
     break;
 
   case 28:
-#line 138 "parse.ypp"
+#line 128 "parse.ypp"
     { (yyval.exprvec) = new ExpressionList(); ;}
     break;
 
   case 29:
-#line 139 "parse.ypp"
+#line 129 "parse.ypp"
     { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[(1) - (1)].expr)); ;}
     break;
 
   case 30:
-#line 140 "parse.ypp"
+#line 130 "parse.ypp"
     { (yyvsp[(1) - (3)].exprvec)->push_back((yyvsp[(3) - (3)].expr)); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1614 "parse.cpp"
+#line 1613 "parse.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1824,6 +1823,6 @@ yyreturn:
 }
 
 
-#line 147 "parse.ypp"
+#line 137 "parse.ypp"
 
 

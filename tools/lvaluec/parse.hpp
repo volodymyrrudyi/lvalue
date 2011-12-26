@@ -104,7 +104,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 48 "parse.ypp"
+#line 47 "parse.ypp"
 {
     AST_Node *node;
     AST_Block *block;

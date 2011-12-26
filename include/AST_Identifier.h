@@ -23,11 +23,11 @@
 #ifndef AST_IDENTIFIER_H
 #define AST_IDENTIFIER_H
 
-#include "AST_Node.h"
+#include "AST_Expression.h"
 
 namespace lvalue
 {
-    class AST_Identifier : public AST_Node
+    class AST_Identifier : public AST_Expression
     {
     public:
     	std::string name;

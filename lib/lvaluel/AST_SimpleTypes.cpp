@@ -31,7 +31,6 @@ lvalue::AST_SimpleType::AST_SimpleType(LValue_Builder &builder)
 lvalue::AST_Integer::AST_Integer(LValue_Builder &builder, long long value)
 	: AST_SimpleType(builder), value(value)
 {
-
 }
 
 Value* lvalue::AST_Integer::emmitCode()
@@ -42,7 +41,6 @@ Value* lvalue::AST_Integer::emmitCode()
 lvalue::AST_Double::AST_Double(LValue_Builder &builder, long double value)
 	: AST_SimpleType(builder), value(value)
 {
-
 }
 
 Value* lvalue::AST_Double::emmitCode()
@@ -53,7 +51,6 @@ Value* lvalue::AST_Double::emmitCode()
 lvalue::AST_Boolean::AST_Boolean(LValue_Builder &builder, bool value)
 	: AST_SimpleType(builder), value(value)
 {
-
 }
 
 Value* lvalue::AST_Boolean::emmitCode()

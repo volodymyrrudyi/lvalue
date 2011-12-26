@@ -24,7 +24,6 @@
 
 lvalue::AST_Expression::AST_Expression(LValue_Builder &builder) : AST_Node(builder)
 {
-
 }
 
 Value* lvalue::AST_Expression::emmitCode()

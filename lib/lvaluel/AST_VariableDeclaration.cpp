@@ -33,6 +33,7 @@ lvalue::AST_VariableDeclaration::AST_VariableDeclaration(LValue_Builder &builder
 
 Value* lvalue::AST_VariableDeclaration::emmitCode()
 {
+	std::cout << "Creating variable declaration " << type.name << " " << id.name << std::endl;
     AllocaInst *alloc = new AllocaInst(typeOf(type), id.name.c_str(), builder.currentBlock());
     builder.localVariables()[id.name] = alloc;
     if (assignmentExpression != NULL) {

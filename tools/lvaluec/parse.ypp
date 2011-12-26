@@ -17,7 +17,6 @@
     using namespace lvalue;
     using namespace llvm;
     #include <cstdio>
-    static AST_Node *programBlock; /* the top level root node of our final AST */
     extern int yylex();
 	LValue_Builder builder;
     void yyerror(const char *s) { printf("ERROR: %s\n", s); }
@@ -58,20 +57,13 @@
     int token;
 }
 
-/* Define our terminal symbols (tokens). This should
-   match our tokens.l lex file. We also define the node type
-   they represent.
- */
+
 %token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING TIF TELSIF TELSE
 %token <token> TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
 %token <token> TDO TEND TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
 %token <token> TDEF TPLUS TMINUS TMUL TDIV
 
-/* Define the type of node our nonterminal symbols represent.
-   The types refer to the %union declaration above. Ex: when
-   we call an ident (defined by union type ident) we are really
-   calling an (NIdentifier*). It makes the compiler happy.
- */
+
 %type <ident> ident
 %type <expr> numeric expr
 %type <varvec> func_decl_args
@@ -80,15 +72,13 @@
 %type <stmt> stmt var_decl func_decl if_stmt
 %type <token> comparison
 
-/* Operator precedence for mathematical operators */
 %left TPLUS TMINUS
 %left TMUL TDIV
 
 %start program
-
 %%
 
-program : stmts { printf("program\n"); builder.root = $1; }
+program : stmts { builder.root = $1; }
         ;
 
 stmts : stmt { $$ = new AST_Block(builder); $$->statements.push_back($<stmt>1); }
@@ -99,12 +89,12 @@ stmt : var_decl | func_decl | if_stmt
      | expr { $$ = new AST_ExpressionStatement(builder, *$1); }
      ;
 
-block : TLBRACE stmts TRBRACE{ $$ = $2; printf("Non-empty block\n"); }
-      | TLBRACE TRBRACE { $$ = new AST_Block(builder);printf("Non-empty block\n"); }
+block : TLBRACE stmts TRBRACE{ $$ = $2;}
+      | TLBRACE TRBRACE { $$ = new AST_Block(builder);}
       ;
 
-var_decl : ident ident { $$ = new AST_VariableDeclaration(builder, *$1, *$2); }
-         | ident ident TEQUAL expr { $$ = new AST_VariableDeclaration(builder, *$1, *$2, $4); }
+var_decl : ident ident { $$ = new AST_VariableDeclaration(builder, *$2, *$1); }
+         | ident ident TEQUAL expr { $$ = new AST_VariableDeclaration(builder, *$2, *$1, $4); }
          ;
 
 func_decl : TDEF ident TLPAREN func_decl_args TRPAREN TCOLON ident block
@@ -115,7 +105,7 @@ func_decl_args : /*blank*/  { $$ = new VariableList(); }
           | var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
           | func_decl_args TCOMMA var_decl { $1->push_back($<var_decl>3); }
           ;
-if_stmt :   TIF TLPAREN expr TRPAREN block TELSE block { printf("if statement\n"); /*$$ = new AST_IfStatement(builder, *$3, *$5, *$7);*/ }
+if_stmt :   TIF TLPAREN expr TRPAREN block TELSE block {  $$ = new AST_IfStatement(builder, *$3, *$5, *$7); }
           | TIF TLPAREN expr TRPAREN block { }
           ;
 
