@@ -28,6 +28,7 @@ lvalue::AST_Block::AST_Block(lvalue::LValue_Builder &builder) : AST_Node(builder
 
 Value* lvalue::AST_Block::emmitCode()
 {
+	cout << "Creating block" << endl;
     StatementList::const_iterator i;
 
 

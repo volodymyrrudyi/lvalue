@@ -47,8 +47,8 @@ Value* lvalue::AST_FunctionDeclaration::emmitCode()
 	    }
 
 	    block.emmitCode();
-	    builder.CreateRet(bblock);
-	    //ReturnInst::Create(getGlobalContext(), bblock);
+	    //ReturnInst::CreateRet(bblock);
+	    ReturnInst::Create(getGlobalContext(), bblock);
 
 	    builder.popBlock();
 	   // std::cout << "Creating function: " << id.name << std::endl;

@@ -1,0 +1,6 @@
+define internal void @main() {
+entry:
+  %a = alloca i64
+  store i64 15, i64* %a
+  ret void
+}

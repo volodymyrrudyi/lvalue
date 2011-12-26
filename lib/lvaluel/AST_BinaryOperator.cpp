@@ -27,10 +27,12 @@ lvalue::AST_BinaryOperator::AST_BinaryOperator(LValue_Builder &builder,
         AST_Expression &lhs, Instruction::BinaryOps op, AST_Expression &rhs)
 : AST_Expression(builder), op(op), lhs(lhs), rhs(rhs)
 {
+
 }
 
 Value* lvalue::AST_BinaryOperator::emmitCode()
 {
-        return builder.CreateBinOp(op, rhs.emmitCode(), lhs.emmitCode(),
-            "binop");
+		cout << "Creating binary operator" << endl;
+        return BinaryOperator::Create(op, rhs.emmitCode(), lhs.emmitCode(),
+            "binop", builder.currentBlock());
 }

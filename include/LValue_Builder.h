@@ -51,9 +51,9 @@ namespace lvalue
 		map<std::string, Value*> localVariables;
 	};
 
-    class LValue_Builder : public llvm::IRBuilder<> {
+    class LValue_Builder {
     protected:
-    	stack<LValue_Block*> blocks;
+    	vector<LValue_Block*> blocks;
     	Function *mainFunction;
     public:
         Module *module;
@@ -63,7 +63,8 @@ namespace lvalue
         void pushBlock(BasicBlock* block);
         void popBlock();
         BasicBlock *currentBlock();
-        map<std::string, Value*> &localVariables() { return blocks.top()->localVariables; };
+        map<std::string, Value*> &localVariables() { return blocks.back()->localVariables; };
+        Value* getVariable(const string &name);
 
         void generateCode();
 

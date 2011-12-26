@@ -8,7 +8,7 @@
 #include "LValue_Builder.h"
 #include "AST_Node.h"
 
-lvalue::LValue_Builder::LValue_Builder() : IRBuilder<>(getGlobalContext())
+lvalue::LValue_Builder::LValue_Builder()
 {
     module = new Module("main", getGlobalContext());
 }
@@ -17,20 +17,20 @@ void lvalue::LValue_Builder::pushBlock(BasicBlock* block)
 {
 	LValue_Block* lvalueBlock = new LValue_Block();
 	lvalueBlock->basicBlock = block;
-	blocks.push(lvalueBlock);
+	blocks.push_back(lvalueBlock);
 }
 
 void lvalue::LValue_Builder::popBlock()
 {
-	LValue_Block *block = blocks.top();
-	blocks.pop();
+	LValue_Block *block = blocks.back();
+	blocks.pop_back();
 
 	delete block;
 }
 
 BasicBlock* lvalue::LValue_Builder::currentBlock()
 {
-	return blocks.top()->basicBlock;
+	return blocks.back()->basicBlock;
 }
 
 void lvalue::LValue_Builder::generateCode()
@@ -43,7 +43,11 @@ void lvalue::LValue_Builder::generateCode()
 
     pushBlock(bblock);
     root->emmitCode(); /* emit bytecode for the toplevel block */
-    ReturnInst::Create(getGlobalContext(), bblock);
+    popBlock();
+    BasicBlock *outerBblock = BasicBlock::Create(getGlobalContext(), "leaving", mainFunction, 0);
+
+    pushBlock(outerBblock);
+    ReturnInst::Create(getGlobalContext(), outerBblock);
     popBlock();
 
 
@@ -54,3 +58,16 @@ void lvalue::LValue_Builder::generateCode()
 
 }
 
+Value* lvalue::LValue_Builder::getVariable(const string &name)
+{
+	for (vector<LValue_Block*>::iterator i = this->blocks.begin(); i != blocks.end(); i++)
+	{
+		std::map<std::string, Value*>::iterator pos = (*i)->localVariables.find(name);
+		if( pos != (*i)->localVariables.end())
+		{
+			return pos->second;
+		}
+	}
+
+	return NULL;
+}

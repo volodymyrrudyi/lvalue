@@ -40,8 +40,8 @@ Value* lvalue::AST_FunctionCall::emmitCode()
 	for (it = arguments.begin(); it != arguments.end(); it++) {
 		args.push_back((**it).emmitCode());
 	}
-	builder.SetInsertPoint(builder.currentBlock());
-	CallInst *call = builder.CreateCall(function, args.begin(), args.end(), "");
+
+	CallInst *call = CallInst::Create(function, args.begin(), args.end(), "", builder.currentBlock());
 	std::cout << "Creating method call: " << id.name << std::endl;
 	return call;
 }

@@ -20,63 +20,50 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#include "AST_IfStatement.h"
+#include "AST_WhileStatement.h"
 #include <llvm/Support/IRBuilder.h>
 
-lvalue::AST_IfStatement::AST_IfStatement(LValue_Builder &builder, AST_Expression& conditionExpression,
-		AST_Block &thenBlock, AST_Block &elseBlock)
+lvalue::AST_WhileStatement::AST_WhileStatement(LValue_Builder &builder, AST_Expression& conditionExpression,
+		AST_Block &bodyBlock)
 	: AST_Statement(builder), conditionExpression(conditionExpression),
-	  thenBlock(thenBlock), elseBlock(elseBlock)
+	  bodyBlock(bodyBlock)
 {
 }
 
 
-Value* lvalue::AST_IfStatement::emmitCode()
+Value* lvalue::AST_WhileStatement::emmitCode()
 {
 	IRBuilder<> irBuilder(getGlobalContext());
 	cout << "Creating If" << endl;
-	Value *CondV = conditionExpression.emmitCode();
-	if (CondV == 0) return 0;
+
 
 	cout << "Inserting condition actions" << endl;
 	// Conversion to comparsion with 0.0
+
+
+	Function *TheFunction = builder.currentBlock()->getParent();
+	BasicBlock *BodyBB 	=  BasicBlock::Create(getGlobalContext(), "whilebody", TheFunction);
+	BasicBlock *internalBB = BasicBlock::Create(getGlobalContext(), "whilebodyimplement", TheFunction);
+	BasicBlock *MergeBB =  BasicBlock::Create(getGlobalContext(), "whilecont");
+
+	builder.pushBlock(BodyBB);
+	Value *CondV = conditionExpression.emmitCode();
+	builder.popBlock();
+	irBuilder.SetInsertPoint(BodyBB);
 	CondV = irBuilder.CreateFCmpONE(CondV,
 								  ConstantFP::get(getGlobalContext(), APFloat(0.0)), "ifcond");
 
-	Function *TheFunction = builder.currentBlock()->getParent();
-	BasicBlock *ThenBB 	=  BasicBlock::Create(getGlobalContext(), "then", TheFunction);
-	BasicBlock *ElseBB 	=  BasicBlock::Create(getGlobalContext(), "else", TheFunction);
-	BasicBlock *MergeBB =  BasicBlock::Create(getGlobalContext(), "ifcont");
 
-	irBuilder.SetInsertPoint(builder.currentBlock());
-	irBuilder.CreateCondBr(CondV, ThenBB, ElseBB);
-
-	irBuilder.SetInsertPoint(ThenBB);
-	builder.pushBlock(ThenBB);
-	Value *ThenV = this->thenBlock.emmitCode();
-	irBuilder.CreateBr(MergeBB);
+	irBuilder.SetInsertPoint(BodyBB);
+	irBuilder.CreateCondBr(CondV, internalBB, MergeBB);
+	irBuilder.SetInsertPoint(internalBB);
+	builder.pushBlock(internalBB);
+	this->bodyBlock.emmitCode();
+	irBuilder.CreateBr(BodyBB);
 	builder.popBlock();
-	if (ThenV == 0) return 0;
-
-	BranchInst::Create(MergeBB);
-	ThenBB = irBuilder.GetInsertBlock();
-
-	TheFunction->getBasicBlockList().push_back(ElseBB);
-	irBuilder.SetInsertPoint(ElseBB);
-
-	builder.pushBlock(ElseBB);
-	Value *ElseV = this->elseBlock.emmitCode();
-	builder.popBlock();
-	if (ElseV == 0) return 0;
-
-	ElseBB = irBuilder.GetInsertBlock();
 
 	TheFunction->getBasicBlockList().push_back(MergeBB);
 	irBuilder.SetInsertPoint(MergeBB);
-	PHINode *PN = irBuilder.CreatePHI(Type::getDoubleTy(getGlobalContext()),
-									"iftmp");
 
-	PN->addIncoming(ThenV, ThenBB);
-	PN->addIncoming(ElseV, ElseBB);
-	return PN;
+	return NULL;
 }

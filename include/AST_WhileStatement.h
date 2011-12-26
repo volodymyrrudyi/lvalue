@@ -20,35 +20,25 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#include "AST_Identifier.h"
+#ifndef AST_WhileStatement_H
+#define AST_WhileStatement_H
 
-lvalue::AST_Identifier::AST_Identifier(LValue_Builder &builder, const std::string &name) :
-    AST_Expression(builder), name(name)
+
+#include "AST_Node.h"
+#include "AST_Statement.h"
+#include "AST_Block.h"
+#include "AST_Expression.h"
+
+namespace lvalue
 {
+	class AST_WhileStatement : public AST_Statement
+	{
+	public:
+	    AST_Expression& conditionExpression;
+	    AST_Block &bodyBlock;
+		AST_WhileStatement(LValue_Builder &builder, AST_Expression& conditionExpression,
+				AST_Block &body);
+		Value* emmitCode();
+	};
 }
-
-Value* lvalue::AST_Identifier::emmitCode()
-{
-	  	std::cout << "Creating identifier reference: " << name << std::endl;
-	    if (builder.getVariable(name) == NULL) {
-	        std::cerr << "undeclared variable " << name << std::endl;
-	        return NULL;
-	    }
-
-	    //return builder.CreateLoad(builder.localVariables()[name]);
-	    return new LoadInst(builder.getVariable(name), "", false, builder.currentBlock());
-}
-
-const Type *lvalue::typeOf(const AST_Identifier& type)
-{
-    if (type.name.compare("int") == 0) {
-        return Type::getInt64Ty(getGlobalContext());
-    }
-    else if (type.name.compare("double") == 0) {
-        return Type::getDoubleTy(getGlobalContext());
-    }
-    else if (type.name.compare("boolean") == 0) {
-           return Type::getInt16Ty(getGlobalContext());
-       }
-    return Type::getVoidTy(getGlobalContext());
-}
+#endif // AST_WhileStatement_H

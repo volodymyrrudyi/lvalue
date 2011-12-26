@@ -43,25 +43,25 @@
      TINTEGER = 259,
      TDOUBLE = 260,
      TSTRING = 261,
-     TIF = 262,
-     TELSIF = 263,
-     TELSE = 264,
-     TCOLON = 265,
-     TCEQ = 266,
-     TCNE = 267,
-     TCLT = 268,
-     TCLE = 269,
-     TCGT = 270,
-     TCGE = 271,
-     TEQUAL = 272,
-     TDO = 273,
-     TEND = 274,
-     TLPAREN = 275,
-     TRPAREN = 276,
-     TLBRACE = 277,
-     TRBRACE = 278,
-     TCOMMA = 279,
-     TDOT = 280,
+     TELSE = 262,
+     TCOLON = 263,
+     TCEQ = 264,
+     TCNE = 265,
+     TCLT = 266,
+     TCLE = 267,
+     TCGT = 268,
+     TCGE = 269,
+     TEQUAL = 270,
+     TDO = 271,
+     TEND = 272,
+     TLPAREN = 273,
+     TRPAREN = 274,
+     TLBRACE = 275,
+     TRBRACE = 276,
+     TCOMMA = 277,
+     TDOT = 278,
+     TWHILE = 279,
+     TIF = 280,
      TDEF = 281,
      TPLUS = 282,
      TMINUS = 283,
@@ -74,25 +74,25 @@
 #define TINTEGER 259
 #define TDOUBLE 260
 #define TSTRING 261
-#define TIF 262
-#define TELSIF 263
-#define TELSE 264
-#define TCOLON 265
-#define TCEQ 266
-#define TCNE 267
-#define TCLT 268
-#define TCLE 269
-#define TCGT 270
-#define TCGE 271
-#define TEQUAL 272
-#define TDO 273
-#define TEND 274
-#define TLPAREN 275
-#define TRPAREN 276
-#define TLBRACE 277
-#define TRBRACE 278
-#define TCOMMA 279
-#define TDOT 280
+#define TELSE 262
+#define TCOLON 263
+#define TCEQ 264
+#define TCNE 265
+#define TCLT 266
+#define TCLE 267
+#define TCGT 268
+#define TCGE 269
+#define TEQUAL 270
+#define TDO 271
+#define TEND 272
+#define TLPAREN 273
+#define TRPAREN 274
+#define TLBRACE 275
+#define TRBRACE 276
+#define TCOMMA 277
+#define TDOT 278
+#define TWHILE 279
+#define TIF 280
 #define TDEF 281
 #define TPLUS 282
 #define TMINUS 283
@@ -104,7 +104,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 47 "parse.ypp"
+#line 69 "parse.ypp"
 {
     AST_Node *node;
     AST_Block *block;

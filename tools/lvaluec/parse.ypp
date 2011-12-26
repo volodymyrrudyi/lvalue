@@ -11,6 +11,7 @@
     #include "AST_IfStatement.h"
     #include "AST_SimpleTypes.h"
     #include "AST_Identifier.h"
+    #include "AST_WhileStatement.h"
 
     #include <llvm/Instructions.h>
     
@@ -37,6 +38,27 @@
     		case TMUL:
     			return Instruction::Mul;
     			break;
+    		case TCEQ:
+    			return Instruction::Sub;
+    			break;
+    		case TCNE:
+    			return Instruction::Sub;
+    			break;
+    		case TCLT:
+    			return Instruction::Sub;
+    			break;
+    		case TCLE:
+    			return Instruction::Sub;
+    			break; 
+    		case TCGT:
+    			return Instruction::Sub;
+    			break;
+    		case TCGE:
+    			return Instruction::Sub;
+    			break;
+    		default:
+    			return Instruction::Sub;
+    			break;
     	}
     }
     
@@ -58,9 +80,9 @@
 }
 
 
-%token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING TIF TELSIF TELSE
-%token <token> TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
-%token <token> TDO TEND TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
+%token <string> TIDENTIFIER TINTEGER TDOUBLE TSTRING TELSE 
+%token <token> TCOLON TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL 
+%token <token> TDO TEND TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT TWHILE TIF
 %token <token> TDEF TPLUS TMINUS TMUL TDIV
 
 
@@ -69,7 +91,7 @@
 %type <varvec> func_decl_args
 %type <exprvec> call_args
 %type <block> program stmts block
-%type <stmt> stmt var_decl func_decl if_stmt
+%type <stmt> stmt var_decl func_decl if_stmt while_stmt
 %type <token> comparison
 
 %left TPLUS TMINUS
@@ -85,7 +107,7 @@ stmts : stmt { $$ = new AST_Block(builder); $$->statements.push_back($<stmt>1); 
       | stmts stmt { $1->statements.push_back($<stmt>2); }
       ;
 
-stmt : var_decl | func_decl | if_stmt
+stmt : var_decl | func_decl | if_stmt | while_stmt
      | expr { $$ = new AST_ExpressionStatement(builder, *$1); }
      ;
 
@@ -105,9 +127,14 @@ func_decl_args : /*blank*/  { $$ = new VariableList(); }
           | var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
           | func_decl_args TCOMMA var_decl { $1->push_back($<var_decl>3); }
           ;
+
+while_stmt : TWHILE TLPAREN expr TRPAREN block {  $$ = new AST_WhileStatement(builder, *$3, *$5); }
+		   ;
+
 if_stmt :   TIF TLPAREN expr TRPAREN block TELSE block {  $$ = new AST_IfStatement(builder, *$3, *$5, *$7); }
-          | TIF TLPAREN expr TRPAREN block { }
           ;
+          
+
 
 
 ident : TIDENTIFIER { $$ = new AST_Identifier(builder, *$1); delete $1; }

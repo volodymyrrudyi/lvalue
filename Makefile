@@ -1,6 +1,6 @@
 LEVEL = .
 REQUIRES_RTTI = 1
-DIRS = tools
+DIRS = lib tools
 EXTRA_DIST = include
 #
 # Include the Master Makefile that knows how to build all.
